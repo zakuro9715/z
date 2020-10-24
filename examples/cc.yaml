@@ -1,0 +1,12 @@
+tasks:
+  compile:
+    run:
+      - clang $@
+    desc: Compile
+    hooks:
+      pre: echo Compiling
+      post: echo Compiled
+    tasks:
+      main:
+        run:
+          - z -c examples/cc.yaml compile main.c

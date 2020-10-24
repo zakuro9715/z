@@ -1,0 +1,18 @@
+shell: bash
+tasks:
+  hello:
+    run:
+      - echo hello
+    hooks:
+      pre: echo saying hello
+      post: echo said hello
+    tasks:
+      world:
+        desc: Hello World
+        run:
+          - z hello -- world
+      cjk:
+        run:
+          - z hello japan
+          - z hello korea
+          - z hello china
