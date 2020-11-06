@@ -9,7 +9,8 @@ import (
 
 var exit = os.Exit
 
-const version = "v0.1.0"
+var version = "unset" // Set via ldflags
+
 const helpTextBase = `
 z - Z Task runner
 
