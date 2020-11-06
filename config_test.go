@@ -26,22 +26,15 @@ func TestLoadHelloExample(t *testing.T) {
 		Shell: "bash",
 		Tasks: map[string]*Task{
 			"hello": {
-				Cmds: []string{"echo hello"},
+				Cmds:        []string{"echo hello", "echo bye"},
+				Description: "Say hello",
 				Hooks: Hooks{
 					Pre:  "echo saying hello",
 					Post: "echo said hello",
 				},
 				Tasks: map[string]*Task{
 					"world": {
-						Cmds:        []string{"z hello -- world"},
-						Description: "Hello World",
-					},
-					"cjk": {
-						Cmds: []string{
-							"z hello japan",
-							"z hello korea",
-							"z hello china",
-						},
+						Cmds: []string{"z hello -- world"},
 					},
 				},
 			},

@@ -8,11 +8,9 @@ func ExampleHello() {
 	os.Setenv("ZCONFIG", "examples/hello.yaml")
 	realMain([]string{"hello"})
 	realMain([]string{"hello", "world"})
-	realMain([]string{"hello", "cjk"})
 	// Output:
 	// hello
+	// bye
 	// hello world
-	// hello japan
-	// hello korea
-	// hello china
+	// bye world
 }
