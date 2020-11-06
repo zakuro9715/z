@@ -9,3 +9,7 @@ tasks:
         desc: Install via gobinaries
         run:
           - curl -sSL gobinaries.com/zakuro9715/z | sh
+  readme:
+    desc: Generate readme
+    run:
+      - sh scripts/generate-readme.sh
