@@ -1,0 +1,11 @@
+tasks:
+  release:
+    desc: z release v1.0.0
+    run:
+      - git tag
+      - git push origin
+    tasks:
+      install:
+        desc: Install via gobinaries
+        run:
+          - curl -sSL gobinaries.com/zakuro9715/z | sh
