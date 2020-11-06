@@ -9,7 +9,6 @@ import (
 
 var exit = os.Exit
 
-const version = "v0.1.0"
 const helpTextBase = `
 z - Z Task runner
 
@@ -68,7 +67,7 @@ func fprintTaskHelp(w io.Writer, task *Task) {
 }
 
 func fprintVersion(w io.Writer) {
-	fmt.Fprintf(w, "z task runner %v\n", version)
+	fmt.Fprintf(w, "z task runner %v\n", Version)
 }
 
 func realMain(args []string) int {
