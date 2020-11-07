@@ -40,13 +40,15 @@ func TestLoadHelloExample(t *testing.T) {
 					"script": {
 						Script: "examples/hello.sh",
 					},
+					"python": {
+						Shell: "python",
+						Cmds:  []string{"print('hello python')"},
+					},
 				},
 			},
 		},
 	}
-	for _, task := range expected.Tasks {
-		task.setConfig(expected)
-	}
+	expected.setup()
 
 	actual, err := LoadConfig("examples/hello.yaml")
 	assert.NoError(t, err)

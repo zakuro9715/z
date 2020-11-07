@@ -20,10 +20,14 @@ func LoadConfig(filename string) (*Config, error) {
 	if err = yaml.Unmarshal(data, config); err != nil {
 		return nil, err
 	}
-	for _, t := range config.Tasks {
-		t.setConfig(config)
-	}
+	config.setup()
 	return config, nil
+}
+
+func (c *Config) setup() {
+	for _, t := range c.Tasks {
+		t.setup(c, nil)
+	}
 }
 
 type Hooks struct {

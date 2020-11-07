@@ -9,10 +9,12 @@ func ExampleHello() {
 	realMain([]string{"hello"})
 	realMain([]string{"hello", "world"})
 	realMain([]string{"hello", "script"})
+	realMain([]string{"hello", "python"})
 	// Output:
 	// hello
 	// bye
 	// hello world
 	// bye world
 	// hello script
+	// hello python
 }

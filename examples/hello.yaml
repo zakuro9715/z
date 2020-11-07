@@ -16,3 +16,8 @@ tasks:                             # Task list
                                    # after -- is args (not subtask name)
       script:
         script: examples/hello.sh  # Run script
+
+      python:
+        shell: python
+        run:
+          - print('hello python')

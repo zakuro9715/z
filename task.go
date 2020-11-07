@@ -9,18 +9,21 @@ import (
 
 type Tasks map[string]*Task
 type Task struct {
+	Shell       string   `yaml:"shell"`
 	Cmds        []string `yaml:"run"`
 	Script      string   `yaml:"script"`
 	Config      *Config
+	Parent      *Task
 	Description string `yaml:"desc"`
 	Hooks       Hooks  `yaml:"hooks"`
 	Tasks       Tasks  `yaml:"tasks"`
 }
 
-func (t *Task) setConfig(c *Config) {
+func (t *Task) setup(c *Config, parent *Task) {
 	t.Config = c
+	t.Parent = parent
 	for _, sub := range t.Tasks {
-		sub.setConfig(c)
+		sub.setup(c, t)
 	}
 }
 
@@ -47,7 +50,7 @@ func (t *Task) Run(args []string) error {
 		return err
 	}
 
-	shell := t.Config.GetShell()
+	shell := t.GetShell()
 	if len(t.Script) > 0 {
 		return runWithOsStdio(exec.Command(shell, t.Script))
 	}
@@ -60,9 +63,15 @@ func (t *Task) Run(args []string) error {
 	return nil
 }
 
-func (c *Config) GetShell() string {
-	if len(c.Shell) == 0 {
-		return "sh"
+func (t *Task) GetShell() string {
+	if len(t.Shell) > 0 {
+		return t.Shell
 	}
-	return c.Shell
+	if t.Parent == nil {
+		if len(t.Config.Shell) == 0 {
+			return "sh"
+		}
+		return t.Config.Shell
+	}
+	return t.Parent.GetShell()
 }
