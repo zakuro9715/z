@@ -1,16 +1,18 @@
-shell: bash                   # Shell to run commands
-tasks:                        # Task list
-  hello:                      # Task name
-    desc: Say hello           # Task description
-    run:                      # Commands to run
-      - echo hello            # It runs `bash -c echo hello`
+shell: bash                        # Shell to run commands
+tasks:                             # Task list
+  hello:                           # Task name
+    desc: Say hello                # Task description
+    run:                           # Commands to run
+      - echo hello                 # It runs `bash -c echo hello`
       - echo bye
-    hooks:                    # hooks
-      pre: echo saying hello  # pre hook
-      post: echo said hello   # post hook
-    tasks:                    # Sub task list
-      world:                  # Sub task name (Task will be 'z hello world')
+    hooks:                         # hooks
+      pre: echo saying hello       # pre hook
+      post: echo said hello        # post hook
+    tasks:                         # Sub task list
+      world:                       # Sub task name (Task will be 'z hello world')
         run:
-          - z hello -- world  # Args are passed all commands
-                              # so it runs 'bash -c "echo hello world"' and 'bash -c "echo bye world"
-                              # after -- is args (not subtask name)
+          - z hello -- world       # Args are passed all commands
+                                   # so it runs 'bash -c "echo hello world"' and 'bash -c "echo bye world"
+                                   # after -- is args (not subtask name)
+      script:
+        script: examples/hello.sh  # Run script
