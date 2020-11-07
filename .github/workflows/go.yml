@@ -24,4 +24,10 @@ jobs:
     - name: Install
       run: go install -v ./
     - name: Test
-      run: go test -v ./...
+      run: go test -v -coverprofile coverage.txt -covermode=atomic ./...
+    - name: Upload coverage to codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: coverage.txt
+        fail_ci_if_error: true
