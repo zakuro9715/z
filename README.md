@@ -1,5 +1,11 @@
 # Z
 
+![Go](https://github.com/zakuro9715/z/workflows/Go/badge.svg)
+[![codecov](https://codecov.io/gh/zakuro9715/z/branch/main/graph/badge.svg?token=K937ZYFF9Z)](https://codecov.io/gh/zakuro9715/z)
+[![Go Report Card](https://goreportcard.com/badge/github.com/zakuro9715/z)](https://goreportcard.com/report/github.com/zakuro9715/z)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
+
 Simple task runner
 
 # Installation
@@ -23,10 +29,6 @@ z tasks... args...
 ```
 
 # Config
-
-Default config file is z.yaml
-
-You can specify config with ZCONFIG env var
 
 ## Run
 
@@ -84,20 +86,27 @@ tasks:
 ```
 
 ```examples/hello.yaml
-shell: bash                   # Shell to run commands
-tasks:                        # Task list
-  hello:                      # Task name
-    desc: Say hello           # Task description
-    run:                      # Commands to run
-      - echo hello            # It runs `bash -c echo hello`
+shell: bash                        # Shell to run commands
+tasks:                             # Task list
+  hello:                           # Task name
+    desc: Say hello                # Task description
+    run:                           # Commands to run
+      - echo hello                 # It runs `bash -c echo hello`
       - echo bye
-    hooks:                    # hooks
-      pre: echo saying hello  # pre hook
-      post: echo said hello   # post hook
-    tasks:                    # Sub task list
-      world:                  # Sub task name (Task will be 'z hello world')
+    hooks:                         # hooks
+      pre: echo saying hello       # pre hook
+      post: echo said hello        # post hook
+    tasks:                         # Sub task list
+      world:                       # Sub task name (Task will be 'z hello world')
         run:
-          - z hello -- world  # Args are passed all commands
-                              # so it runs 'bash -c "echo hello world"' and 'bash -c "echo bye world"
-                              # after -- is args (not subtask name)
+          - z hello -- world       # Args are passed all commands
+                                   # so it runs 'bash -c "echo hello world"' and 'bash -c "echo bye world"
+                                   # after -- is args (not subtask name)
+      script:
+        script: examples/hello.sh  # Run script
+
+      python:
+        shell: python
+        run:
+          - print('hello python')
 ```
