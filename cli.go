@@ -128,6 +128,7 @@ func realMain(args []string) int {
 			break
 		}
 	}
-	task.Run(args[i:])
+
+	NewTaskRunner(task).Run(args[i:])
 	return 0
 }
