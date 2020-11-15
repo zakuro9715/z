@@ -5,6 +5,8 @@ import (
 	"io"
 	"os"
 	"strings"
+
+	"github.com/zakuro9715/z/config"
 )
 
 var exit = os.Exit
@@ -31,7 +33,7 @@ func showTextAndExit(code int, text string) {
 	exit(code)
 }
 
-func fprintTasks(w io.Writer, tasks map[string]*Task) {
+func fprintTasks(w io.Writer, tasks map[string]*config.Task) {
 	fmt.Fprintln(w, "Tasks:")
 	maxNameLen := 0
 	for k := range tasks {
@@ -49,7 +51,7 @@ func fprintTasks(w io.Writer, tasks map[string]*Task) {
 	}
 }
 
-func fprintHelp(w io.Writer, config *Config) {
+func fprintHelp(w io.Writer, config *config.Config) {
 	var sb strings.Builder
 	sb.WriteString(helpTextBase)
 	if config != nil {
@@ -59,7 +61,7 @@ func fprintHelp(w io.Writer, config *Config) {
 	fmt.Fprintln(w, sb.String())
 }
 
-func fprintTaskHelp(w io.Writer, task *Task) {
+func fprintTaskHelp(w io.Writer, task *config.Task) {
 	var sb strings.Builder
 	sb.WriteString(task.Description)
 	if len(task.Tasks) > 0 {
@@ -79,7 +81,7 @@ func realMain(args []string) int {
 		configPath = p
 	}
 
-	config, err := LoadConfig(configPath)
+	config, err := config.LoadConfig(configPath)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		return 1

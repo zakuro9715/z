@@ -4,13 +4,15 @@ import (
 	"os"
 	"os/exec"
 	"strings"
+
+	"github.com/zakuro9715/z/config"
 )
 
 type TaskRunner struct {
-	task *Task
+	task *config.Task
 }
 
-func NewTaskRunner(t *Task) *TaskRunner {
+func NewTaskRunner(t *config.Task) *TaskRunner {
 	return &TaskRunner{t}
 }
 

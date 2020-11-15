@@ -1,4 +1,4 @@
-package main
+package config
 
 import (
 	"os"
@@ -11,11 +11,12 @@ import (
 
 func TestExampleIsValid(t *testing.T) {
 	assert.NoError(t,
-		filepath.Walk("examples", func(path string, info os.FileInfo, err error) error {
+		filepath.Walk("../examples", func(path string, info os.FileInfo, err error) error {
 			assert.NoError(t, err)
 			if info.IsDir() || !strings.HasSuffix(path, "yaml") {
 				return nil
 			}
+			println(path)
 			_, err = LoadConfig(path)
 			return err
 		}),
@@ -50,7 +51,7 @@ func TestLoadHelloExample(t *testing.T) {
 	}
 	expected.setup()
 
-	actual, err := LoadConfig("examples/hello.yaml")
+	actual, err := LoadConfig("../examples/hello.yaml")
 	assert.NoError(t, err)
 
 	assert.Equal(t, expected, actual)
