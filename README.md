@@ -107,6 +107,5 @@ tasks:                             # Task list
 
       python:
         shell: python
-        run:
-          - print('hello python')
+        run: print('hello python') # Run shorthand
 ```

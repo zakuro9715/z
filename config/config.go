@@ -60,6 +60,19 @@ func (t *Task) setup(c *Config, parent *Task) {
 	}
 }
 
+func (cmds *Cmds) UnmarshalYAML(data []byte) error {
+	var str string
+	if err := yaml.Unmarshal(data, &str); err == nil {
+		*cmds = []string{str}
+		return nil
+	}
+
+	ss := []string{}
+	err := yaml.Unmarshal(data, &ss)
+	*cmds = ss
+	return err
+}
+
 func (t *Task) Verify() error {
 	if len(t.Cmds) > 0 && len(t.Script) > 0 {
 		return errors.New(
