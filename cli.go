@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/zakuro9715/nzflag"
 	"github.com/zakuro9715/z/config"
 )
 
@@ -81,56 +82,79 @@ func realMain(args []string) int {
 		configPath = p
 	}
 
+	nzargs := (&nzflag.App{
+		FlagOption: map[string]nzflag.FlagOption{
+			"c":      nzflag.HasValue,
+			"config": nzflag.HasValue,
+		},
+	}).Normalize(args)
+
+	helpFlag := false
+	unknownFlag := false
+	for ; i < len(nzargs); i++ {
+		arg := nzargs[i]
+		if arg.Type() != nzflag.TypeFlag {
+			break
+		}
+		switch {
+		case isHelpFlag(arg.String()):
+			helpFlag = true
+		case arg.Flag().Name == "v" || arg.Flag().Name == "--version":
+			fprintVersion(os.Stdout)
+		case arg.Flag().Name == "c" || arg.Flag().Name == "config":
+			configPath = arg.Flag().Values[0]
+		default: // unknow flag
+			unknownFlag = true
+		}
+	}
+
 	config, err := config.LoadConfig(configPath)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		return 1
 	}
 
-	for ; i < len(args); i++ {
-		arg := args[i]
-		if arg[0] != '-' {
-			break
-		}
-		switch {
-		case isHelpFlag(arg):
-			fprintHelp(os.Stdout, config)
-			return 0
-		case arg == "-v" || arg == "--version":
-			fprintVersion(os.Stdout)
-		default: // unknow flag
-			fprintHelp(os.Stderr, nil)
-			return 1
-		}
+	if unknownFlag {
+		fprintHelp(os.Stderr, config)
+		return 0
 	}
 
-	if i >= len(args) {
+	if helpFlag {
+		fprintHelp(os.Stdout, config)
+		return 0
+	}
+
+	if i >= len(nzargs) {
 		fprintHelp(os.Stderr, config)
 		return 1
 	}
 
-	task, ok := config.Tasks[args[i]]
+	task, ok := config.Tasks[nzargs[i].String()]
 	if !ok {
-		fmt.Fprintf(os.Stderr, "Unknown task: %v\n", args[i])
+		fmt.Fprintf(os.Stderr, "Unknown task: %v\n", nzargs[i].String())
 		exit(1)
 	}
 	i++
-	for ; i < len(args); i++ {
-		if isHelpFlag(args[i]) {
+	for ; i < len(nzargs); i++ {
+		if isHelpFlag(nzargs[i].String()) {
 			fprintTaskHelp(os.Stdout, task)
 			return 0
 		}
-		if args[i] == "--" {
+		if nzargs[i].String() == "--" {
 			i += 1
 			break
 		}
-		if subtask, ok := task.Tasks[args[i]]; ok {
+		if subtask, ok := task.Tasks[nzargs[i].String()]; ok {
 			task = subtask
 		} else {
 			break
 		}
 	}
 
-	NewTaskRunner(task).Run(args[i:])
+	taskArgs := make([]string, len(nzargs[i:]))
+	for i, arg := range nzargs[i:] {
+		taskArgs[i] = arg.String()
+	}
+	NewTaskRunner(task).Run(taskArgs)
 	return 0
 }
