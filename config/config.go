@@ -9,8 +9,9 @@ import (
 
 /* -- config -- */
 type Config struct {
-	Shell string `yaml:"shell"`
-	Tasks Tasks  `yaml:"tasks"`
+	Shell   string `yaml:"shell"`
+	Default string `yaml:"default"`
+	Tasks   Tasks  `yaml:"tasks"`
 }
 
 func LoadConfig(filename string) (*Config, error) {
