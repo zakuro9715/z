@@ -57,3 +57,26 @@ func TestLoadHelloExample(t *testing.T) {
 
 	assert.Equal(t, expected, actual)
 }
+
+func TestSetup(t *testing.T) {
+	c := &Config{
+		Tasks: map[string]*Task{
+			"hello": {
+				Tasks: map[string]*Task{
+					"world": {},
+				},
+			},
+		},
+	}
+
+	assert.Empty(t, c.Tasks["hello"].Name)
+	assert.Nil(t, c.Tasks["hello"].Config)
+	assert.Empty(t, c.Tasks["hello"].Tasks["world"].Name)
+	assert.Nil(t, c.Tasks["hello"].Tasks["world"].Config)
+
+	c.setup()
+	assert.Equal(t, "hello", c.Tasks["hello"].Name)
+	assert.Equal(t, c, c.Tasks["hello"].Config)
+	assert.Equal(t, "world", c.Tasks["hello"].Tasks["world"].Name)
+	assert.Equal(t, c, c.Tasks["hello"].Tasks["world"].Config)
+}
