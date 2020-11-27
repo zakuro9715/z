@@ -28,8 +28,8 @@ func LoadConfig(filename string) (*Config, error) {
 }
 
 func (c *Config) setup() {
-	for _, t := range c.Tasks {
-		t.setup(c, nil)
+	for name, t := range c.Tasks {
+		t.setup(c, nil, name)
 	}
 }
 
@@ -43,6 +43,7 @@ type Hooks struct {
 type Cmds []string
 type Tasks map[string]*Task
 type Task struct {
+	Name        string
 	Shell       string `yaml:"shell"`
 	Cmds        Cmds   `yaml:"run"`
 	Script      string `yaml:"script"`
@@ -53,11 +54,12 @@ type Task struct {
 	Tasks       Tasks  `yaml:"tasks"`
 }
 
-func (t *Task) setup(c *Config, parent *Task) {
+func (t *Task) setup(c *Config, parent *Task, name string) {
+	t.Name = name
 	t.Config = c
 	t.Parent = parent
-	for _, sub := range t.Tasks {
-		sub.setup(c, t)
+	for name, sub := range t.Tasks {
+		sub.setup(c, t, name)
 	}
 }
 
