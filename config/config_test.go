@@ -70,13 +70,17 @@ func TestSetup(t *testing.T) {
 	}
 
 	assert.Empty(t, c.Tasks["hello"].Name)
+	assert.Empty(t, c.Tasks["hello"].fullName)
 	assert.Nil(t, c.Tasks["hello"].Config)
 	assert.Empty(t, c.Tasks["hello"].Tasks["world"].Name)
+	assert.Empty(t, c.Tasks["hello"].Tasks["world"].fullName)
 	assert.Nil(t, c.Tasks["hello"].Tasks["world"].Config)
 
 	c.setup()
 	assert.Equal(t, "hello", c.Tasks["hello"].Name)
+	assert.Equal(t, "hello", c.Tasks["hello"].fullName)
 	assert.Equal(t, c, c.Tasks["hello"].Config)
 	assert.Equal(t, "world", c.Tasks["hello"].Tasks["world"].Name)
+	assert.Equal(t, "hello.world", c.Tasks["hello"].Tasks["world"].fullName)
 	assert.Equal(t, c, c.Tasks["hello"].Tasks["world"].Config)
 }

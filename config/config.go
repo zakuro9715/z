@@ -44,6 +44,7 @@ type Cmds []string
 type Tasks map[string]*Task
 type Task struct {
 	Name        string
+	fullName    string
 	Shell       string `yaml:"shell"`
 	Cmds        Cmds   `yaml:"run"`
 	Script      string `yaml:"script"`
@@ -58,6 +59,11 @@ func (t *Task) setup(c *Config, parent *Task, name string) {
 	t.Name = name
 	t.Config = c
 	t.Parent = parent
+	if parent != nil {
+		t.fullName = parent.fullName + "." + t.Name
+	} else {
+		t.fullName = t.Name
+	}
 	for name, sub := range t.Tasks {
 		sub.setup(c, t, name)
 	}
