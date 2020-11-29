@@ -125,6 +125,7 @@ func realMain(args []string) int {
 	}
 
 	if i >= len(nzargs) {
+		println("OK")
 		fprintHelp(os.Stderr, config)
 		return 1
 	}

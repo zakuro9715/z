@@ -43,6 +43,7 @@ type Hooks struct {
 type Cmds []string
 type Tasks map[string]*Task
 type Task struct {
+	IsDefault   bool
 	Name        string
 	fullName    string
 	Shell       string `yaml:"shell"`
@@ -63,6 +64,9 @@ func (t *Task) setup(c *Config, parent *Task, name string) {
 		t.fullName = parent.fullName + "." + t.Name
 	} else {
 		t.fullName = t.Name
+	}
+	if t.fullName == c.Default {
+		t.IsDefault = true
 	}
 	for name, sub := range t.Tasks {
 		sub.setup(c, t, name)
