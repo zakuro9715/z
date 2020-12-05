@@ -87,3 +87,9 @@ func TestSetup(t *testing.T) {
 	assert.Equal(t, "hello.world", c.Tasks["hello"].Tasks["world"].fullName)
 	assert.Equal(t, c, c.Tasks["hello"].Tasks["world"].Config)
 }
+
+func TestVerify(t *testing.T) {
+	assert.NoError(t, (&Task{Cmds: []string{""}, Script: ""}).Verify())
+	assert.NoError(t, (&Task{Cmds: []string{}, Script: "v.sh"}).Verify())
+	assert.Error(t, (&Task{Cmds: []string{""}, Script: "v.sh"}).Verify())
+}
