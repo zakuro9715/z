@@ -124,18 +124,22 @@ func realMain(args []string) int {
 		return 0
 	}
 
+	taskName := config.Default
 	if i >= len(nzargs) {
-		println("OK")
-		fprintHelp(os.Stderr, config)
-		return 1
+		if len(taskName) == 0 {
+			fprintHelp(os.Stderr, config)
+			return 1
+		}
+	} else {
+		taskName = nzargs[i].String()
+		i++
 	}
 
-	task, ok := config.Tasks[nzargs[i].String()]
+	task, ok := config.Tasks[taskName]
 	if !ok {
 		fmt.Fprintf(os.Stderr, "Unknown task: %v\n", nzargs[i].String())
 		exit(1)
 	}
-	i++
 	for ; i < len(nzargs); i++ {
 		if isHelpFlag(nzargs[i].String()) {
 			fprintTaskHelp(os.Stdout, task)
