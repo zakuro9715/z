@@ -87,6 +87,7 @@ tasks:
 
 ```examples/hello.yaml
 shell: bash                        # Shell to run commands
+default: hello                     # Default task
 tasks:                             # Task list
   hello:                           # Task name
     desc: Say hello                # Task description
