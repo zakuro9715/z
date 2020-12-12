@@ -29,8 +29,8 @@ func (r *TaskRunner) Run(args []string) error {
 	}
 
 	shell := r.task.GetShell()
-	if len(r.task.Script) > 0 {
-		return runWithOsStdio(exec.Command(shell, r.task.Script))
+	if len(r.task.RunFile) > 0 {
+		return runWithOsStdio(exec.Command(shell, r.task.RunFile))
 	}
 	for _, command := range r.task.Cmds {
 		cmd := exec.Command(shell, "-c", command+" "+strings.Join(args, " "))
