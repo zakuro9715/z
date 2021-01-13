@@ -43,7 +43,7 @@ func (v ArgsConfig) ProcessArgs(args []string) ([]string, error) {
 	return args, nil
 }
 
-type Task struct {
+type task struct {
 	IsDefault   bool
 	Name        string
 	fullName    string
@@ -56,14 +56,23 @@ type Task struct {
 	Tasks       Tasks      `yaml:"tasks"`
 	ArgsConfig  ArgsConfig `yaml:"args"`
 }
+
+type Task struct {
+	task
+}
 type Tasks map[string]*Task
+
+func (task *Task) UnmarshalYAML(data []byte) error {
+	err := yaml.Unmarshal(data, &task.task)
+	return err
+}
 
 func (t *Task) setup(c *Config, parent *Task, name string) {
 	names := strings.SplitN(name, ".", 2)
 	if len(names) > 1 {
 		sub := *t // copy
 		*t = Task{
-			Tasks: map[string]*Task{names[1]: &sub},
+			task{Tasks: map[string]*Task{names[1]: &sub}},
 		}
 	}
 	t.Name = names[0]

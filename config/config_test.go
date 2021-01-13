@@ -25,8 +25,10 @@ func TestSetup(t *testing.T) {
 		Default: "hello.world",
 		Tasks: map[string]*Task{
 			"hello": {
-				Tasks: map[string]*Task{
-					"world": {},
+				task{
+					Tasks: map[string]*Task{
+						"world": {},
+					},
 				},
 			},
 			"echo.hey": {},
@@ -61,8 +63,10 @@ func TestFindTask(t *testing.T) {
 		Default: "hello.world",
 		Tasks: map[string]*Task{
 			"hello": {
-				Tasks: map[string]*Task{
-					"world": {},
+				task{
+					Tasks: map[string]*Task{
+						"world": {},
+					},
 				},
 			},
 		},

@@ -29,31 +29,37 @@ func TestLoadHelloExample(t *testing.T) {
 		Default: "hello",
 		Tasks: map[string]*Task{
 			"hello": {
-				Cmds:        []string{"echo hello", "echo bye"},
-				Description: "Say hello",
-				Hooks: Hooks{
-					Pre:  "echo saying hello",
-					Post: "echo said hello",
-				},
-				ArgsConfig: ArgsConfig{
-					Required: true,
-					Default:  "you",
-				},
-				Tasks: map[string]*Task{
-					"world": {
-						Cmds: []string{"z hello -- world"},
+				task{
+					Cmds:        []string{"echo hello", "echo bye"},
+					Description: "Say hello",
+					Hooks: Hooks{
+						Pre:  "echo saying hello",
+						Post: "echo said hello",
 					},
-					"script": {
-						Cmds: []string{"examples/hello.sh"},
+					ArgsConfig: ArgsConfig{
+						Required: true,
+						Default:  "you",
 					},
-					"python": {
-						Shell: "python",
-						Cmds:  []string{"print('hello python')"},
+					Tasks: map[string]*Task{
+						"world": {
+							task{Cmds: []string{"z hello -- world"}},
+						},
+						"script": {
+							task{Cmds: []string{"examples/hello.sh"}},
+						},
+						"python": {
+							task{
+								Shell: "python",
+								Cmds:  []string{"print('hello python')"},
+							},
+						},
 					},
 				},
 			},
 			"echo.hey": {
-				Cmds: []string{"echo hey"},
+				task{
+					Cmds: []string{"echo hey"},
+				},
 			},
 		},
 	}

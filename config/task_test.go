@@ -7,6 +7,6 @@ import (
 )
 
 func TestVerify(t *testing.T) {
-	assert.NoError(t, (&Task{Cmds: []string{"v"}}).Verify())
+	assert.NoError(t, (&Task{task{Cmds: []string{"v"}}}).Verify())
 	assert.Error(t, (&Task{}).Verify())
 }
