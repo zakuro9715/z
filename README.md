@@ -112,4 +112,7 @@ tasks:                             # Task list
       python:
         shell: python
         run: print('hello python') # Run shorthand
+
+  echo.hey:                        # Subtask shorthand
+    run: echo hey
 ```
