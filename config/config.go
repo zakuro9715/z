@@ -28,7 +28,7 @@ func LoadConfig(filename string) (*Config, error) {
 }
 
 func (c *Config) collectTasksRecursive(task *Task) {
-	c.allTasks[task.fullName] = task
+	c.allTasks[task.FullName] = task
 	for _, t := range task.Tasks {
 		c.collectTasksRecursive(t)
 	}

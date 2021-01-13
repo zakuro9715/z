@@ -46,7 +46,7 @@ func (v ArgsConfig) ProcessArgs(args []string) ([]string, error) {
 type task struct {
 	IsDefault   bool
 	Name        string
-	fullName    string
+	FullName    string
 	Shell       string `yaml:"shell"`
 	Cmds        Cmds   `yaml:"run"`
 	Config      *Config
@@ -79,11 +79,11 @@ func (t *Task) setup(c *Config, parent *Task, name string) {
 	t.Config = c
 	t.Parent = parent
 	if parent != nil {
-		t.fullName = parent.fullName + "." + t.Name
+		t.FullName = parent.FullName + "." + t.Name
 	} else {
-		t.fullName = t.Name
+		t.FullName = t.Name
 	}
-	if t.fullName == c.Default {
+	if t.FullName == c.Default {
 		t.IsDefault = true
 	}
 	for name, sub := range t.Tasks {
