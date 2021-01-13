@@ -7,8 +7,8 @@ tasks:                             # Task list
       - echo hello                 # It runs `bash -c echo hello`
       - echo bye
     args:
-      required: true
-      default: you
+      required: true               # Required one more arguments
+      default: you                 # Default argument
     hooks:                         # hooks
       pre: echo saying hello       # pre hook
       post: echo said hello        # post hook
