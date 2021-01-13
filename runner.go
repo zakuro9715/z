@@ -23,19 +23,28 @@ func runWithOsStdio(cmd *exec.Cmd) error {
 	return cmd.Run()
 }
 
+func isScriptFile(name string) bool {
+	// err or dir or executable
+	if f, err := os.Stat(name); err != nil || f.IsDir() || (f.Mode()&0111 == 0111) {
+		return false
+	}
+	return true
+}
+
 func (r *TaskRunner) Run(args []string) error {
 	if err := r.task.Verify(); err != nil {
 		return err
 	}
 
 	shell := r.task.GetShell()
-	if len(r.task.RunFile) > 0 {
-		return runWithOsStdio(exec.Command(shell, r.task.RunFile))
-	}
 	for _, command := range r.task.Cmds {
-		cmd := exec.Command(shell, "-c", command+" "+strings.Join(args, " "))
-		if err := runWithOsStdio(cmd); err != nil {
-			return err
+		if isScriptFile(command) {
+			return runWithOsStdio(exec.Command(shell, append([]string{command}, args...)...))
+		} else {
+			cmd := exec.Command(shell, "-c", command+" "+strings.Join(args, " "))
+			if err := runWithOsStdio(cmd); err != nil {
+				return err
+			}
 		}
 	}
 	return nil

@@ -1,1 +1,1 @@
-echo hello script
+echo hello script $@

@@ -16,7 +16,7 @@ tasks:                             # Task list
                                    # so it runs 'bash -c "echo hello world"' and 'bash -c "echo bye world"
                                    # after -- is args (not subtask name)
       script:
-        run_file: examples/hello.sh  # Run script
+        run: examples/hello.sh     # Run script
 
       python:
         shell: python

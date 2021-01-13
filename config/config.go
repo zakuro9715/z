@@ -48,7 +48,6 @@ type Task struct {
 	fullName    string
 	Shell       string `yaml:"shell"`
 	Cmds        Cmds   `yaml:"run"`
-	RunFile     string `yaml:"run_file"`
 	Config      *Config
 	Parent      *Task
 	Description string `yaml:"desc"`
@@ -87,11 +86,7 @@ func (cmds *Cmds) UnmarshalYAML(data []byte) error {
 }
 
 func (t *Task) Verify() error {
-	if len(t.Cmds) > 0 && len(t.RunFile) > 0 {
-		return errors.New(
-			"You can only use either run or script. But both are specified.",
-		)
-	} else if len(t.Cmds) == 0 && len(t.RunFile) == 0 {
+	if len(t.Cmds) == 0 {
 		return errors.New("Nothing to run")
 	}
 	return nil

@@ -40,7 +40,7 @@ func TestLoadHelloExample(t *testing.T) {
 						Cmds: []string{"z hello -- world"},
 					},
 					"script": {
-						RunFile: "examples/hello.sh",
+						Cmds: []string{"examples/hello.sh"},
 					},
 					"python": {
 						Shell: "python",
@@ -89,7 +89,6 @@ func TestSetup(t *testing.T) {
 }
 
 func TestVerify(t *testing.T) {
-	assert.NoError(t, (&Task{Cmds: []string{""}, RunFile: ""}).Verify())
-	assert.NoError(t, (&Task{Cmds: []string{}, RunFile: "v.sh"}).Verify())
-	assert.Error(t, (&Task{Cmds: []string{""}, RunFile: "v.sh"}).Verify())
+	assert.NoError(t, (&Task{Cmds: []string{"v"}}).Verify())
+	assert.Error(t, (&Task{}).Verify())
 }
