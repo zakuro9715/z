@@ -12,8 +12,6 @@ func ExampleHello() {
 	realMain([]string{"hello.world"})
 	realMain([]string{"hello", "script"})
 	realMain([]string{"hello", "python"})
-	realMain([]string{"echo.hey"})
-	realMain([]string{"echo", "hey"})
 	// Output:
 	// hello world
 	// bye world
@@ -25,6 +23,13 @@ func ExampleHello() {
 	// bye world
 	// hello script
 	// hello python
+}
+
+func ExampleEcho() {
+	os.Setenv("ZCONFIG", "examples/hello.yaml")
+	realMain([]string{"echo.hey"})
+	realMain([]string{"echo", "hey"})
+	// Output:
 	// hey
 	// hey
 }
