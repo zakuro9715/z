@@ -8,6 +8,7 @@ import (
 
 	"github.com/zakuro9715/nzflag"
 	"github.com/zakuro9715/z/config"
+	"github.com/zakuro9715/z/runner"
 )
 
 var exit = os.Exit
@@ -160,6 +161,6 @@ func realMain(args []string) int {
 	for i, arg := range nzargs[i:] {
 		taskArgs[i] = arg.String()
 	}
-	NewTaskRunner(task).Run(taskArgs)
+	runner.New(task).Run(taskArgs)
 	return 0
 }

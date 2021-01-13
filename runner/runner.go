@@ -1,4 +1,4 @@
-package main
+package runner
 
 import (
 	"os"
@@ -12,7 +12,7 @@ type TaskRunner struct {
 	task *config.Task
 }
 
-func NewTaskRunner(t *config.Task) *TaskRunner {
+func New(t *config.Task) *TaskRunner {
 	return &TaskRunner{t}
 }
 
