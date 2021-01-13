@@ -35,6 +35,10 @@ func TestLoadHelloExample(t *testing.T) {
 					Pre:  "echo saying hello",
 					Post: "echo said hello",
 				},
+				ArgsConfig: ArgsConfig{
+					Required: true,
+					Default:  "you",
+				},
 				Tasks: map[string]*Task{
 					"world": {
 						Cmds: []string{"z hello -- world"},

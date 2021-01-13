@@ -26,6 +26,11 @@ type Hooks struct {
 	Post string `yaml:"post"`
 }
 
+type ArgsConfig struct {
+	Required bool   `yaml:"required"`
+	Default  string `yaml:"default"`
+}
+
 type Task struct {
 	IsDefault   bool
 	Name        string
@@ -34,9 +39,10 @@ type Task struct {
 	Cmds        Cmds   `yaml:"run"`
 	Config      *Config
 	Parent      *Task
-	Description string `yaml:"desc"`
-	Hooks       Hooks  `yaml:"hooks"`
-	Tasks       Tasks  `yaml:"tasks"`
+	Description string     `yaml:"desc"`
+	Hooks       Hooks      `yaml:"hooks"`
+	Tasks       Tasks      `yaml:"tasks"`
+	ArgsConfig  ArgsConfig `yaml:"args"`
 }
 type Tasks map[string]*Task
 
