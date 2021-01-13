@@ -52,6 +52,9 @@ func TestLoadHelloExample(t *testing.T) {
 					},
 				},
 			},
+			"echo.hey": {
+				Cmds: []string{"echo hey"},
+			},
 		},
 	}
 	expected.setup()

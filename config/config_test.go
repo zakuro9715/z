@@ -29,6 +29,7 @@ func TestSetup(t *testing.T) {
 					"world": {},
 				},
 			},
+			"echo.hey": {},
 		},
 	}
 
@@ -40,6 +41,7 @@ func TestSetup(t *testing.T) {
 	assert.Empty(t, c.Tasks["hello"].Tasks["world"].fullName)
 	assert.Nil(t, c.Tasks["hello"].Tasks["world"].Config)
 	assert.Nil(t, c.allTasks)
+	assert.Nil(t, c.Tasks["echo"])
 
 	c.setup()
 
@@ -50,8 +52,9 @@ func TestSetup(t *testing.T) {
 	assert.Equal(t, "world", c.Tasks["hello"].Tasks["world"].Name)
 	assert.Equal(t, "hello.world", c.Tasks["hello"].Tasks["world"].fullName)
 	assert.Equal(t, c, c.Tasks["hello"].Tasks["world"].Config)
-	fullNames := []string{"hello", "hello.world"}
+	fullNames := []string{"echo", "echo.hey", "hello", "hello.world"}
 	assert.ElementsMatch(t, fullNames, c.allTasks.FullNames())
+	assert.Nil(t, c.Tasks)
 }
 
 func TestFindTask(t *testing.T) {

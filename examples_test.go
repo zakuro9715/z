@@ -12,6 +12,8 @@ func ExampleHello() {
 	realMain([]string{"hello.world"})
 	realMain([]string{"hello", "script"})
 	realMain([]string{"hello", "python"})
+	realMain([]string{"echo.hey"})
+	realMain([]string{"echo", "hey"})
 	// Output:
 	// hello you
 	// bye you
@@ -23,4 +25,6 @@ func ExampleHello() {
 	// bye world
 	// hello script
 	// hello python
+	// hey
+	// hey
 }

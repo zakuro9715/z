@@ -59,7 +59,14 @@ type Task struct {
 type Tasks map[string]*Task
 
 func (t *Task) setup(c *Config, parent *Task, name string) {
-	t.Name = name
+	names := strings.SplitN(name, ".", 2)
+	if len(names) > 1 {
+		sub := *t // copy
+		*t = Task{
+			Tasks: map[string]*Task{names[1]: &sub},
+		}
+	}
+	t.Name = names[0]
 	t.Config = c
 	t.Parent = parent
 	if parent != nil {
