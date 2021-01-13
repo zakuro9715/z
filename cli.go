@@ -137,7 +137,7 @@ func realMain(args []string) int {
 
 	task, ok := config.Tasks[taskName]
 	if !ok {
-		fmt.Fprintf(os.Stderr, "Unknown task: %v\n", nzargs[i].String())
+		fmt.Fprintf(os.Stderr, "Unknown task: %v\n", taskName)
 		exit(1)
 	}
 	for ; i < len(nzargs); i++ {
