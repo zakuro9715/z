@@ -6,13 +6,26 @@ import (
 	"github.com/goccy/go-yaml"
 )
 
+type Cmds []string
+
+func (cmds *Cmds) UnmarshalYAML(data []byte) error {
+	var str string
+	if err := yaml.Unmarshal(data, &str); err == nil {
+		*cmds = []string{str}
+		return nil
+	}
+
+	ss := []string{}
+	err := yaml.Unmarshal(data, &ss)
+	*cmds = ss
+	return err
+}
+
 type Hooks struct {
 	Pre  string `yaml:"pre"`
 	Post string `yaml:"post"`
 }
 
-type Cmds []string
-type Tasks map[string]*Task
 type Task struct {
 	IsDefault   bool
 	Name        string
@@ -25,6 +38,7 @@ type Task struct {
 	Hooks       Hooks  `yaml:"hooks"`
 	Tasks       Tasks  `yaml:"tasks"`
 }
+type Tasks map[string]*Task
 
 func (t *Task) setup(c *Config, parent *Task, name string) {
 	t.Name = name
@@ -41,19 +55,6 @@ func (t *Task) setup(c *Config, parent *Task, name string) {
 	for name, sub := range t.Tasks {
 		sub.setup(c, t, name)
 	}
-}
-
-func (cmds *Cmds) UnmarshalYAML(data []byte) error {
-	var str string
-	if err := yaml.Unmarshal(data, &str); err == nil {
-		*cmds = []string{str}
-		return nil
-	}
-
-	ss := []string{}
-	err := yaml.Unmarshal(data, &ss)
-	*cmds = ss
-	return err
 }
 
 func (t *Task) Verify() error {
