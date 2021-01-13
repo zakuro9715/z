@@ -26,7 +26,7 @@ func TestExampleIsValid(t *testing.T) {
 func TestLoadHelloExample(t *testing.T) {
 	expected := &Config{
 		Shell:   "bash",
-		Default: "hello",
+		Default: "hello.world",
 		Tasks: map[string]*Task{
 			"hello": {
 				task{

@@ -1,5 +1,5 @@
 shell: bash                        # Shell to run commands
-default: hello                     # Default task
+default: hello.world               # Default task. hello.world -> z hello world
 tasks:                             # Task list
   hello:                           # Task name
     desc: Say hello                # Task description
