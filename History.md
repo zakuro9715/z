@@ -1,3 +1,12 @@
+v0.3.0 / 2021-01-13
+===================
+
+* Dot-style task names (`hello.world` == `hello` `world`)
+* Args config
+* Default task
+* Update syntax
+* Bug fixes
+
 v0.2.0 / 2020-11-16
 ===================
 
