@@ -58,6 +58,12 @@ func TestLoadHelloExample(t *testing.T) {
 	assert.Equal(t, expected, actual)
 }
 
+func TestLoadConfigError(t *testing.T) {
+	config, err := LoadConfig("nonexists")
+	assert.Nil(t, config)
+	assert.Error(t, err)
+}
+
 func TestSetup(t *testing.T) {
 	c := &Config{
 		Default: "hello.world",
