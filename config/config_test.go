@@ -54,7 +54,6 @@ func TestSetup(t *testing.T) {
 	assert.Equal(t, c, c.Tasks["hello"].Tasks["world"].Config)
 	fullNames := []string{"echo", "echo.hey", "hello", "hello.world"}
 	assert.ElementsMatch(t, fullNames, c.allTasks.FullNames())
-	assert.Nil(t, c.Tasks)
 }
 
 func TestFindTask(t *testing.T) {
