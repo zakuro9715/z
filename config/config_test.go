@@ -6,6 +6,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func (tasks Tasks) FullNames() []string {
+	names := make([]string, 0, len(tasks))
+	for name := range tasks {
+		names = append(names, name)
+	}
+	return names
+}
+
 func TestLoadConfigError(t *testing.T) {
 	config, err := LoadConfig("nonexists")
 	assert.Nil(t, config)
@@ -31,8 +39,10 @@ func TestSetup(t *testing.T) {
 	assert.Empty(t, c.Tasks["hello"].Tasks["world"].Name)
 	assert.Empty(t, c.Tasks["hello"].Tasks["world"].fullName)
 	assert.Nil(t, c.Tasks["hello"].Tasks["world"].Config)
+	assert.Nil(t, c.allTasks)
 
 	c.setup()
+
 	assert.Equal(t, "hello", c.Tasks["hello"].Name)
 	assert.Equal(t, "hello", c.Tasks["hello"].fullName)
 	assert.Equal(t, c, c.Tasks["hello"].Config)
@@ -40,4 +50,25 @@ func TestSetup(t *testing.T) {
 	assert.Equal(t, "world", c.Tasks["hello"].Tasks["world"].Name)
 	assert.Equal(t, "hello.world", c.Tasks["hello"].Tasks["world"].fullName)
 	assert.Equal(t, c, c.Tasks["hello"].Tasks["world"].Config)
+	fullNames := []string{"hello", "hello.world"}
+	assert.ElementsMatch(t, fullNames, c.allTasks.FullNames())
+}
+
+func TestFindTask(t *testing.T) {
+	c := &Config{
+		Default: "hello.world",
+		Tasks: map[string]*Task{
+			"hello": {
+				Tasks: map[string]*Task{
+					"world": {},
+				},
+			},
+		},
+	}
+	c.setup()
+
+	assert.Equal(t, c.Tasks["hello"], c.FindTask("hello"))
+	assert.Equal(t, c.Tasks["hello"].Tasks["world"], c.FindTask("hello.world"))
+	assert.Equal(t, c.Tasks["hello"].Tasks["world"], c.FindTask("hello", "world"))
+	assert.Nil(t, c.FindTask("null"))
 }
