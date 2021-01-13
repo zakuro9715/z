@@ -125,35 +125,33 @@ func realMain(args []string) int {
 		return 0
 	}
 
-	taskName := config.Default
+	task := config.FindTask(config.Default)
 	if i >= len(nzargs) {
-		if len(taskName) == 0 {
+		if len(config.Default) == 0 {
 			fprintHelp(os.Stderr, config)
 			return 1
 		}
 	} else {
-		taskName = nzargs[i].String()
-		i++
-	}
-
-	task, ok := config.Tasks[taskName]
-	if !ok {
-		fmt.Fprintf(os.Stderr, "Unknown task: %v\n", taskName)
-		exit(1)
-	}
-	for ; i < len(nzargs); i++ {
-		if isHelpFlag(nzargs[i].String()) {
-			fprintTaskHelp(os.Stdout, task)
-			return 0
-		}
-		if nzargs[i].String() == "--" {
-			i += 1
-			break
-		}
-		if subtask, ok := task.Tasks[nzargs[i].String()]; ok {
-			task = subtask
-		} else {
-			break
+		fullName := ""
+		for ; i < len(nzargs); i++ {
+			arg := nzargs[i]
+			if isHelpFlag(nzargs[i].String()) {
+				fprintTaskHelp(os.Stdout, task)
+				return 0
+			}
+			if arg.String() == "--" {
+				i++
+				break
+			}
+			if len(fullName) > 0 {
+				fullName += "."
+			}
+			fullName += arg.String()
+			newTask := config.FindTask(fullName)
+			if newTask == nil {
+				break
+			}
+			task = newTask
 		}
 	}
 
