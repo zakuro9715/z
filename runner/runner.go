@@ -36,6 +36,10 @@ func (r *TaskRunner) Run(args []string) error {
 		return err
 	}
 
+	args, err := r.task.ArgsConfig.ProcessArgs(args)
+	if err != nil {
+		return err
+	}
 	shell := r.task.GetShell()
 	for _, command := range r.task.Cmds {
 		if isScriptFile(command) {

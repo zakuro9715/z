@@ -11,8 +11,8 @@ func ExampleHello() {
 	realMain([]string{"hello", "script"})
 	realMain([]string{"hello", "python"})
 	// Output:
-	// hello
-	// bye
+	// hello you
+	// bye you
 	// hello world
 	// bye world
 	// hello script

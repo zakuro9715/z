@@ -2,6 +2,7 @@ package config
 
 import (
 	"errors"
+	"strings"
 
 	"github.com/goccy/go-yaml"
 )
@@ -29,6 +30,17 @@ type Hooks struct {
 type ArgsConfig struct {
 	Required bool   `yaml:"required"`
 	Default  string `yaml:"default"`
+}
+
+func (v ArgsConfig) ProcessArgs(args []string) ([]string, error) {
+	if len(args) == 0 {
+		if len(v.Default) > 0 {
+			return strings.Split(v.Default, " "), nil
+		} else if v.Required {
+			return nil, errors.New("args is required")
+		}
+	}
+	return args, nil
 }
 
 type Task struct {
