@@ -94,6 +94,9 @@ tasks:                             # Task list
     run:                           # Commands to run
       - echo hello                 # It runs `bash -c echo hello`
       - echo bye
+    args:
+      required: true
+      default: you
     hooks:                         # hooks
       pre: echo saying hello       # pre hook
       post: echo said hello        # post hook
@@ -104,7 +107,7 @@ tasks:                             # Task list
                                    # so it runs 'bash -c "echo hello world"' and 'bash -c "echo bye world"
                                    # after -- is args (not subtask name)
       script:
-        script: examples/hello.sh  # Run script
+        run: examples/hello.sh     # Run script
 
       python:
         shell: python
