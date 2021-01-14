@@ -50,6 +50,7 @@ type task struct {
 	FullName    string
 	Shell       string `yaml:"shell"`
 	Cmds        Cmds   `yaml:"run"`
+	Envs        Envs   `yaml:"env"`
 	Config      *Config
 	Parent      *Task
 	Description string     `yaml:"desc"`
