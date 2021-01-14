@@ -106,7 +106,7 @@ tasks:                             # Task list
 
       python:
         shell: python
-        run: print('hello python') # Run shorthand
+        run: print('hello python')
 
   hello.world:                     # Sub task shorthand (Task will be 'z hello world')
     run:
