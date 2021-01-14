@@ -31,8 +31,23 @@ func isScriptFile(name string) bool {
 	return true
 }
 
+func setDefaultEnvs(envs config.Envs) error {
+	for k, v := range envs {
+		if _, found := os.LookupEnv(k); !found {
+			if err := os.Setenv(k, v); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
 func (r *TaskRunner) Run(args []string) error {
 	if err := r.task.Verify(); err != nil {
+		return err
+	}
+
+	if err := setDefaultEnvs(r.task.Config.Envs); err != nil {
 		return err
 	}
 

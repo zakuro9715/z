@@ -7,10 +7,13 @@ import (
 	"github.com/goccy/go-yaml"
 )
 
+type Envs map[string]string
+
 type Config struct {
 	Shell    string `yaml:"shell"`
 	Default  string `yaml:"default"`
 	Tasks    Tasks  `yaml:"tasks"`
+	Envs     Envs   `yaml:"env"`
 	allTasks Tasks
 }
 
