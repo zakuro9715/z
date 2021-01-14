@@ -119,5 +119,5 @@ tasks:                             # Task list
   echo.twice:                      # Multi commands can be used
     - echo
     - echo
-  echo.env.message: echo $MESSAGE
+  echo.env.message: echo $MESSAGE  # use env
 ```
