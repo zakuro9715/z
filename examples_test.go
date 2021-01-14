@@ -24,3 +24,10 @@ func ExampleHello() {
 	// hello script
 	// hello python
 }
+
+func ExampleEcho() {
+	os.Setenv("ZCONFIG", "examples/hello.yaml")
+	realMain([]string{"echo", "hello"})
+	// Output:
+	// hello
+}

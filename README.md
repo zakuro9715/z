@@ -113,4 +113,5 @@ tasks:                             # Task list
       - z hello -- world           # Args are passed all commands
                                    # so it runs 'bash -c "echo hello world"' and 'bash -c "echo bye world"
                                    # after -- is args (not subtask name)
+  echo: echo                       # Shorthand command ('run' can be omitted').
 ```
