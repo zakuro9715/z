@@ -1,6 +1,7 @@
 v0.4.0 / 2021-XX-XX
 ===================
 
+* Pretty error message
 * Command shorthand
 * Bug fixes
 
