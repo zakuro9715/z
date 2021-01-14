@@ -88,6 +88,8 @@ tasks:
 ```examples/hello.yaml
 shell: bash                        # Shell to run commands
 default: hello.world               # Default task. hello.world -> z hello world
+env:
+  MESSAGE: message                 # It used if environment variable does not exist.
 tasks:                             # Task list
   hello:                           # Task name
     desc: Say hello                # Task description
@@ -117,4 +119,5 @@ tasks:                             # Task list
   echo.twice:                      # Multi commands can be used
     - echo
     - echo
+  echo.env.message: echo $MESSAGE
 ```
