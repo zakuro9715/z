@@ -1,4 +1,6 @@
+default: install
 tasks:
+  install: go install
   release:
     desc: z release v1.0.0
     run:
