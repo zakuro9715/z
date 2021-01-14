@@ -92,8 +92,8 @@ tasks:                             # Task list
   hello:                           # Task name
     desc: Say hello                # Task description
     run:                           # Commands to run
-      - echo hello                 # It runs `bash -c echo hello`
-      - echo bye
+      - echo hello                 # `bash -c "echo hello {args}`
+      - echo bye                   # `bash -c "echo bye {args}"`
     args:
       required: true               # Required one more arguments
       default: you                 # Default argument
