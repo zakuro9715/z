@@ -87,7 +87,7 @@ tasks:
 
 ```examples/hello.yaml
 shell: bash                        # Shell to run commands
-default: hello                     # Default task
+default: hello.world               # Default task. hello.world -> z hello world
 tasks:                             # Task list
   hello:                           # Task name
     desc: Say hello                # Task description
@@ -95,17 +95,12 @@ tasks:                             # Task list
       - echo hello                 # It runs `bash -c echo hello`
       - echo bye
     args:
-      required: true
-      default: you
+      required: true               # Required one more arguments
+      default: you                 # Default argument
     hooks:                         # hooks
       pre: echo saying hello       # pre hook
       post: echo said hello        # post hook
     tasks:                         # Sub task list
-      world:                       # Sub task name (Task will be 'z hello world')
-        run:
-          - z hello -- world       # Args are passed all commands
-                                   # so it runs 'bash -c "echo hello world"' and 'bash -c "echo bye world"
-                                   # after -- is args (not subtask name)
       script:
         run: examples/hello.sh     # Run script
 
@@ -113,6 +108,9 @@ tasks:                             # Task list
         shell: python
         run: print('hello python') # Run shorthand
 
-  echo.hey:                        # Subtask shorthand
-    run: echo hey
+  hello.world:                     # Sub task shorthand (Task will be 'z hello world')
+    run:
+      - z hello -- world           # Args are passed all commands
+                                   # so it runs 'bash -c "echo hello world"' and 'bash -c "echo bye world"
+                                   # after -- is args (not subtask name)
 ```
