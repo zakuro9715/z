@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/goccy/go-yaml"
 	"github.com/zakuro9715/nzflag"
 	"github.com/zakuro9715/z/config"
 	"github.com/zakuro9715/z/runner"
@@ -111,7 +112,7 @@ func realMain(args []string) int {
 
 	config, err := config.LoadConfig(configPath)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
+		fmt.Fprintln(os.Stderr, yaml.FormatError(err, true, true))
 		return 1
 	}
 
