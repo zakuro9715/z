@@ -1,6 +1,7 @@
 v0.4.0 / 2021-XX-XX
 ===================
 
+* Env
 * Pretty error message
 * Command shorthand
 * Bug fixes
