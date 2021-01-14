@@ -120,4 +120,8 @@ tasks:                             # Task list
     - echo
     - echo
   echo.env.message: echo $MESSAGE  # use env
+  echo.env.message2:
+    env:                           # task local default env
+      MESSAGE: message2
+    run: echo $MESSAGE
 ```
