@@ -44,6 +44,7 @@ func (v ArgsConfig) ProcessArgs(args []string) ([]string, error) {
 }
 
 type task struct {
+	dummy       bool
 	IsDefault   bool
 	Name        string
 	FullName    string
@@ -72,7 +73,10 @@ func (t *Task) setup(c *Config, parent *Task, name string) {
 	if len(names) > 1 {
 		sub := *t // copy
 		*t = Task{
-			task{Tasks: map[string]*Task{names[1]: &sub}},
+			task{
+				dummy: true,
+				Tasks: map[string]*Task{names[1]: &sub},
+			},
 		}
 	}
 	t.Name = names[0]
