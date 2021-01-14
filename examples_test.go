@@ -28,6 +28,9 @@ func ExampleHello() {
 func ExampleEcho() {
 	os.Setenv("ZCONFIG", "examples/hello.yaml")
 	realMain([]string{"echo", "hello"})
+	realMain([]string{"echo", "twice", "hi"})
 	// Output:
 	// hello
+	// hi
+	// hi
 }

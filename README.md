@@ -114,4 +114,7 @@ tasks:                             # Task list
                                    # so it runs 'bash -c "echo hello world"' and 'bash -c "echo bye world"
                                    # after -- is args (not subtask name)
   echo: echo                       # Shorthand command ('run' can be omitted').
+  echo.twice:                      # Multi commands can be used
+    - echo
+    - echo
 ```
