@@ -64,6 +64,18 @@ type Task struct {
 type Tasks map[string]*Task
 
 func (task *Task) UnmarshalYAML(data []byte) error {
+	var str string
+	if err := yaml.Unmarshal(data, &str); err == nil {
+		task.Cmds = []string{str}
+		task.Description = str
+		return nil
+	}
+	var strs []string
+	if err := yaml.Unmarshal(data, &strs); err == nil {
+		task.Cmds = strs
+		task.Description = strings.Join(strs, "\n")
+		return nil
+	}
 	err := yaml.Unmarshal(data, &task.task)
 	return err
 }
