@@ -34,3 +34,13 @@ func ExampleEcho() {
 	// hi
 	// hi
 }
+
+func ExampleEnv() {
+	os.Setenv("ZCONFIG", "examples/hello.yaml")
+	realMain([]string{"echo.env.message"})
+	os.Setenv("MESSAGE", "system")
+	realMain([]string{"echo.env.message"})
+	// Output:
+	// message
+	// system
+}
