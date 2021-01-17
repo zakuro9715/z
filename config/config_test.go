@@ -36,11 +36,11 @@ func TestSetup(t *testing.T) {
 	}
 
 	assert.Empty(t, c.Tasks["hello"].Name)
-	assert.Empty(t, c.Tasks["hello"].fullName)
+	assert.Empty(t, c.Tasks["hello"].FullName)
 	assert.Nil(t, c.Tasks["hello"].Config)
 	assert.False(t, c.Tasks["hello"].IsDefault)
 	assert.Empty(t, c.Tasks["hello"].Tasks["world"].Name)
-	assert.Empty(t, c.Tasks["hello"].Tasks["world"].fullName)
+	assert.Empty(t, c.Tasks["hello"].Tasks["world"].FullName)
 	assert.Nil(t, c.Tasks["hello"].Tasks["world"].Config)
 	assert.Nil(t, c.allTasks)
 	assert.Nil(t, c.Tasks["echo"])
@@ -48,13 +48,13 @@ func TestSetup(t *testing.T) {
 	c.setup()
 
 	assert.Equal(t, "hello", c.Tasks["hello"].Name)
-	assert.Equal(t, "hello", c.Tasks["hello"].fullName)
+	assert.Equal(t, "hello", c.Tasks["hello"].FullName)
 	assert.Equal(t, c, c.Tasks["hello"].Config)
 	assert.True(t, c.Tasks["hello"].Tasks["world"].IsDefault)
 	assert.Equal(t, "world", c.Tasks["hello"].Tasks["world"].Name)
-	assert.Equal(t, "hello.world", c.Tasks["hello"].Tasks["world"].fullName)
+	assert.Equal(t, "hello.world", c.Tasks["hello"].Tasks["world"].FullName)
 	assert.Equal(t, c, c.Tasks["hello"].Tasks["world"].Config)
-	fullNames := []string{"echo", "echo.hey", "hello", "hello.world"}
+	fullNames := []string{"echo.hey", "hello", "hello.world"}
 	assert.ElementsMatch(t, fullNames, c.allTasks.FullNames())
 }
 
