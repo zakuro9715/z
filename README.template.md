@@ -57,6 +57,21 @@ tasks:
   hello: echo hello
 ```
 
+### Shorthand
+
+```
+tasks:
+    hello.world: echo hello world
+```
+
+```
+$ z hello world
+hello world
+$ z hello.world
+hello world
+```
+
+
 ### Args or flags
 
 You can specify args and flags. They are passed to each commands
@@ -70,8 +85,6 @@ sh -c "echo hello2 world"
 ```
 
 You can pass flags and args. They will be passed to each commands
-
-
 
 # Examples
 
