@@ -86,6 +86,23 @@ sh -c "echo hello2 world"
 
 You can pass flags and args. They will be passed to each commands
 
+## Default task
+
+You can use default task
+
+```
+default: hello.world
+tasks:
+    hello:
+        tasks:
+            world: echo hello world
+```
+
+```
+$ z
+hello world
+```
+
 # Examples
 
 See also [Examples Test](./examples_test.go)
