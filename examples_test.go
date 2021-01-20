@@ -42,9 +42,9 @@ func ExampleEnv() {
 	os.Setenv("MESSAGE", "system")
 	realMain([]string{"echo.env.message"})
 	os.Unsetenv("MESSAGE")
-	realMain([]string{"echo.env.message2"})
+	realMain([]string{"echo", "env", "message2"})
 	os.Setenv("MESSAGE", "system")
-	realMain([]string{"echo.env.message2"})
+	realMain([]string{"echo", "env", "message2"})
 	// Output:
 	// message
 	// system
