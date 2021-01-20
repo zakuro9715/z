@@ -16,10 +16,10 @@ Via gobinaries
 curl -sSL gobinaries.com/zakuro9715/z | sh
 ```
 
-Build from source
+By go install
 
 ```
-go get github.com/zakuro9715/z
+go install github.com/zakuro9715/z
 ```
 
 # Usage
