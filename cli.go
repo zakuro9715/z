@@ -134,14 +134,15 @@ func realMain(args []string) int {
 		}
 	} else {
 		fullName := ""
-		for ; i < len(nzargs); i++ {
-			arg := nzargs[i]
-			if isHelpFlag(nzargs[i].String()) {
+		i2 := i
+		for ; i2 < len(nzargs); i2++ {
+			arg := nzargs[i2]
+			if isHelpFlag(nzargs[i2].String()) {
 				fprintTaskHelp(os.Stdout, task)
 				return 0
 			}
 			if arg.String() == "--" {
-				i++
+				i = i2 + 1
 				break
 			}
 			if len(fullName) > 0 {
@@ -149,10 +150,10 @@ func realMain(args []string) int {
 			}
 			fullName += arg.String()
 			newTask := config.FindTask(fullName)
-			if newTask == nil {
-				break
+			if newTask != nil {
+				i = i2 + 1
+				task = newTask
 			}
-			task = newTask
 		}
 	}
 
