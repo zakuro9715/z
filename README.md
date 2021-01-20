@@ -34,7 +34,7 @@ z tasks... args...
 
 Run with specified shell (default: sh)
 
-```
+```yaml
 tasks:
     hello:
         run:
@@ -59,7 +59,7 @@ tasks:
 
 ### Shorthand
 
-```
+```yaml
 tasks:
     hello.world: echo hello world
 ```
@@ -90,7 +90,7 @@ You can pass flags and args. They will be passed to each commands
 
 You can use default task
 
-```
+```yaml
 default: hello.world
 tasks:
     hello:
