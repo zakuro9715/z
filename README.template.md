@@ -50,6 +50,13 @@ sh -c "echo hello1"
 sh -c "echo hello2"
 ```
 
+`run` can be omitted
+
+```
+tasks:
+  hello: echo hello
+```
+
 ### Args or flags
 
 You can specify args and flags. They are passed to each commands
