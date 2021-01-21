@@ -55,7 +55,7 @@ func Fatal(s string) {
 }
 
 func (l *Logger) Fatalf(s string, a ...interface{}) {
-	l.Logf(FATAL, s, a...)
+	l.Logf(FATAL, "[FATAL] "+s, a...)
 	os.Exit(2)
 }
 
@@ -72,7 +72,7 @@ func Info(s string) (int, error) {
 }
 
 func (l *Logger) Infof(s string, a ...interface{}) (int, error) {
-	return l.Logf(INFO, s, a...)
+	return l.Logf(INFO, "[INFO] "+s, a...)
 }
 
 func Infof(s string, a ...interface{}) (int, error) {
