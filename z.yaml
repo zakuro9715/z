@@ -15,3 +15,6 @@ tasks:
     desc: Generate readme
     run:
       - sh scripts/generate-readme.sh
+  test:
+    - go install
+    - go test ./...
