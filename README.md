@@ -103,6 +103,20 @@ $ z
 hello world
 ```
 
+## Task Alias
+
+```yaml
+tasks:
+    hello.world: echo hello world
+    helloworld:
+        z: hello.world
+```
+
+```
+$z helloworld
+hello world
+```
+
 # Examples
 
 See also [Examples Test](./examples_test.go)
