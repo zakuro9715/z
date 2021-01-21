@@ -81,8 +81,10 @@ func Run(task *config.Task, args []string) error {
 	log.Infof("task: '%v' args: %v\n", task.FullName, args)
 	logEnv(task)
 
+	argsStr := strings.Join(args, " ")
 	for _, command := range task.Cmds {
 		if isScriptFile(command) {
+			log.Infof("script: %v %v\n", command, argsStr)
 			return runWithOsStdio(exec.Command(shell, append([]string{command}, args...)...))
 		} else {
 			cmd := exec.Command(shell, "-c", command+" "+strings.Join(args, " "))
