@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"io/ioutil"
 	"strings"
 
@@ -59,6 +60,11 @@ func (c *Config) setup() {
 	}
 }
 
-func (c *Config) FindTask(splitedFullName ...string) *Task {
-	return c.allTasks[strings.Join(splitedFullName, ".")]
+func (c *Config) FindTask(splitedFullName ...string) (*Task, error) {
+	fullName := strings.Join(splitedFullName, ".")
+	task, ok := c.allTasks[fullName]
+	if ok {
+		return task, nil
+	}
+	return nil, fmt.Errorf("Unknown task: %v", fullName)
 }

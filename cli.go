@@ -148,7 +148,7 @@ func realMain(args []string) int {
 		return 0
 	}
 
-	task := config.FindTask(config.Default)
+	task, _ := config.FindTask(config.Default)
 	{
 		fullName := ""
 		i2 := i
@@ -166,12 +166,11 @@ func realMain(args []string) int {
 				fullName += "."
 			}
 			fullName += arg.String()
-			newTask := config.FindTask(fullName)
-			if newTask != nil {
+			if newTask, err := config.FindTask(fullName); err == nil {
 				i = i2 + 1
 				task = newTask
 				if len(task.AliasTo) > 0 {
-					task = config.FindTask(task.AliasTo)
+					task, _ = config.FindTask(task.AliasTo)
 				}
 			}
 		}

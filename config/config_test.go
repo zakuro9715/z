@@ -73,8 +73,12 @@ func TestFindTask(t *testing.T) {
 	}
 	c.setup()
 
-	assert.Equal(t, c.Tasks["hello"], c.FindTask("hello"))
-	assert.Equal(t, c.Tasks["hello"].Tasks["world"], c.FindTask("hello.world"))
-	assert.Equal(t, c.Tasks["hello"].Tasks["world"], c.FindTask("hello", "world"))
-	assert.Nil(t, c.FindTask("null"))
+	findTask := func(args ...string) *Task {
+		t, _ := c.FindTask(args...)
+		return t
+	}
+	assert.Equal(t, c.Tasks["hello"], findTask("hello"))
+	assert.Equal(t, c.Tasks["hello"].Tasks["world"], findTask("hello.world"))
+	assert.Equal(t, c.Tasks["hello"].Tasks["world"], findTask("hello", "world"))
+	assert.Nil(t, findTask("null"))
 }
