@@ -24,8 +24,17 @@ Usage:
   z [OPTIONS] task... [ARGS]
 `
 
+const (
+	ENV_KEY_ZCONNFIG = "ZCONFIG"
+	ENV_KEY_ZVERBOSE = "ZVERBOSE"
+)
+
 func isHelpFlag(s string) bool {
 	return s == "-h" || s == "--help"
+}
+
+func isEnvValTrue(s string) bool {
+	return len(s) > 0 && s != "0" && s != "no"
 }
 
 func showTextAndExit(code int, text string) {
@@ -94,6 +103,7 @@ func realMain(args []string) int {
 
 	helpFlag := false
 	unknownFlag := false
+	verboseFlag := isEnvValTrue(os.Getenv(ENV_KEY_ZVERBOSE))
 	for ; i < len(nzargs); i++ {
 		arg := nzargs[i]
 		if arg.Type() != nzflag.TypeFlag {
@@ -105,13 +115,19 @@ func realMain(args []string) int {
 		case arg.Flag().Name == "V" || arg.Flag().Name == "version":
 			fprintVersion(os.Stdout)
 		case arg.Flag().Name == "v" || arg.Flag().Name == "verbose":
-			log.Default.Level = log.INFO
+			verboseFlag = true
 		case arg.Flag().Name == "c" || arg.Flag().Name == "config":
 			configPath = arg.Flag().Values[0]
 		default: // unknow flag
 			unknownFlag = true
 		}
 	}
+
+	if verboseFlag {
+		log.Default.Level = log.INFO
+		os.Setenv(ENV_KEY_ZVERBOSE, "1")
+	}
+	os.Setenv(ENV_KEY_ZCONNFIG, configPath)
 
 	log.Info("flags:")
 	log.Info("  %v", nzargs[0:i])
