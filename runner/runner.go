@@ -69,6 +69,8 @@ func (r *TaskRunner) Run(task *config.Task, args []string) error {
 	shell := task.GetShell()
 	log.Infof("shell: %v\n", shell)
 
+	log.Infof("task: '%v' args: %v\n", task.FullName, args)
+
 	for _, command := range task.Cmds {
 		if isScriptFile(command) {
 			return runWithOsStdio(exec.Command(shell, append([]string{command}, args...)...))
