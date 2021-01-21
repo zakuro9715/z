@@ -7,6 +7,7 @@ import (
 func ExampleHello() {
 	os.Setenv("ZCONFIG", "examples/hello.yaml")
 	realMain([]string{})
+	realMain([]string{"arg"})
 	realMain([]string{"hello"})
 	realMain([]string{"hello", "world"})
 	realMain([]string{"hello.world"})
@@ -15,6 +16,8 @@ func ExampleHello() {
 	// Output:
 	// hello world
 	// bye world
+	// hello world arg
+	// bye world arg
 	// hello you
 	// bye you
 	// hello world
