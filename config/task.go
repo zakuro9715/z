@@ -77,8 +77,13 @@ func (task *Task) UnmarshalYAML(data []byte) error {
 		task.Description = strings.Join(strs, "\n")
 		return nil
 	}
-	err := yaml.Unmarshal(data, &task.task)
-	return err
+	if err := yaml.Unmarshal(data, &task.task); err != nil {
+		return err
+	}
+	if len(task.Description) == 0 {
+		task.Description = strings.Join(task.Cmds, "\n")
+	}
+	return nil
 }
 
 func (t *Task) setup(c *Config, parent *Task, name string) {
