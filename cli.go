@@ -170,6 +170,9 @@ func realMain(args []string) int {
 			if newTask != nil {
 				i = i2 + 1
 				task = newTask
+				if len(task.AliasTo) > 0 {
+					task = config.FindTask(task.AliasTo)
+				}
 			}
 		}
 	}
