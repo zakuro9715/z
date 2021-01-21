@@ -82,12 +82,13 @@ func Run(task *config.Task, args []string) error {
 	logEnv(task)
 
 	argsStr := strings.Join(args, " ")
+	log.Info("run:")
 	for _, command := range task.Cmds {
 		if isScriptFile(command) {
-			log.Infof("script: %v %v\n", command, argsStr)
+			log.Infof("  script: %v %v\n", command, argsStr)
 			return runWithOsStdio(exec.Command(shell, append([]string{command}, args...)...))
 		} else {
-			log.Infof("command: %v %v\n", command, argsStr)
+			log.Infof("  command: %v %v\n", command, argsStr)
 			cmd := exec.Command(shell, "-c", command+" "+strings.Join(args, " "))
 			if err := runWithOsStdio(cmd); err != nil {
 				return err
