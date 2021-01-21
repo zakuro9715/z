@@ -34,6 +34,10 @@ func LoadConfig(filename string) (*Config, error) {
 		log.Info("    " + filename)
 		log.Info("  default:")
 		log.Info("    " + config.Default)
+		log.Info("  tasks:")
+		for _, task := range config.allTasks {
+			log.Info("    " + task.FullName)
+		}
 	}
 	return config, nil
 }
