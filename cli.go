@@ -15,7 +15,7 @@ import (
 
 var exit = os.Exit
 
-var version = "unset" // Set via ldflags
+var version = "git v0.4.0 or later" // Set via ldflags
 
 const helpTextBase = `
 z - Z Task runner
