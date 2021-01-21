@@ -28,10 +28,7 @@ func New(level Level, out io.Writer) *Logger {
 }
 
 func (l *Logger) Log(level Level, message string) (int, error) {
-	if l.Level < level {
-		return 0, nil
-	}
-	return fmt.Fprintln(l.out, message)
+	return l.Logf(level, message+"\n")
 }
 
 func Log(level Level, message string) (int, error) {
@@ -50,8 +47,7 @@ func Logf(level Level, format string, a ...interface{}) (int, error) {
 }
 
 func (l *Logger) Fatal(s string) {
-	l.Log(FATAL, s)
-	os.Exit(2)
+	l.Fatalf(s + "\n")
 }
 
 func Fatal(s string) {
@@ -68,7 +64,7 @@ func Fatalf(s string, a ...interface{}) {
 }
 
 func (l *Logger) Info(s string) (int, error) {
-	return l.Log(INFO, s)
+	return l.Infof(s + "\n")
 }
 
 func Info(s string) (int, error) {
