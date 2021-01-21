@@ -9,13 +9,6 @@ import (
 	"github.com/zakuro9715/z/log"
 )
 
-type TaskRunner struct {
-}
-
-func New() *TaskRunner {
-	return &TaskRunner{}
-}
-
 func runWithOsStdio(cmd *exec.Cmd) error {
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
@@ -69,7 +62,7 @@ func logEnv(task *config.Task) {
 	}
 }
 
-func (r *TaskRunner) Run(task *config.Task, args []string) error {
+func Run(task *config.Task, args []string) error {
 	if err := task.Verify(); err != nil {
 		return err
 	}
