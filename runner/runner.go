@@ -9,11 +9,10 @@ import (
 )
 
 type TaskRunner struct {
-	task *config.Task
 }
 
-func New(t *config.Task) *TaskRunner {
-	return &TaskRunner{t}
+func New() *TaskRunner {
+	return &TaskRunner{}
 }
 
 func runWithOsStdio(cmd *exec.Cmd) error {
@@ -53,21 +52,21 @@ func setTaskDefaultEnvs(task *config.Task) error {
 	return setTaskDefaultEnvs(task.Parent)
 }
 
-func (r *TaskRunner) Run(args []string) error {
-	if err := r.task.Verify(); err != nil {
+func (r *TaskRunner) Run(task *config.Task, args []string) error {
+	if err := task.Verify(); err != nil {
 		return err
 	}
 
-	if err := setTaskDefaultEnvs(r.task); err != nil {
+	if err := setTaskDefaultEnvs(task); err != nil {
 		return err
 	}
 
-	args, err := r.task.ArgsConfig.ProcessArgs(args)
+	args, err := task.ArgsConfig.ProcessArgs(args)
 	if err != nil {
 		return err
 	}
-	shell := r.task.GetShell()
-	for _, command := range r.task.Cmds {
+	shell := task.GetShell()
+	for _, command := range task.Cmds {
 		if isScriptFile(command) {
 			return runWithOsStdio(exec.Command(shell, append([]string{command}, args...)...))
 		} else {

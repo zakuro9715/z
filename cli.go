@@ -161,6 +161,6 @@ func realMain(args []string) int {
 	for i, arg := range nzargs[i:] {
 		taskArgs[i] = arg.String()
 	}
-	runner.New(task).Run(taskArgs)
+	runner.New().Run(task, taskArgs)
 	return 0
 }
