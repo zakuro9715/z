@@ -58,7 +58,7 @@ func logEnv(task *config.Task) {
 		}
 	}
 	for k := range envs {
-		log.Infof("  %v=%v\n", k, os.Getenv(k))
+		log.Info("  %v=%v", k, os.Getenv(k))
 	}
 }
 
@@ -82,17 +82,17 @@ func Run(task *config.Task, args []string) error {
 	log.Info("task:")
 	log.Info("  " + task.FullName)
 	log.Info("args:")
-	log.Infof("  %v\n", args)
+	log.Info("  %v", args)
 	logEnv(task)
 
 	argsStr := strings.Join(args, " ")
 	log.Info("run:")
 	for _, command := range task.Cmds {
 		if isScriptFile(command) {
-			log.Infof("  script: %v %v\n", command, argsStr)
+			log.Info("  script: %v %v", command, argsStr)
 			return runWithOsStdio(exec.Command(shell, append([]string{command}, args...)...))
 		} else {
-			log.Infof("  command: %v %v\n", command, argsStr)
+			log.Info("  command: %v %v", command, argsStr)
 			cmd := exec.Command(shell, "-c", command+" "+strings.Join(args, " "))
 			if err := runWithOsStdio(cmd); err != nil {
 				return err

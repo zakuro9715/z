@@ -27,54 +27,30 @@ func New(level Level, out io.Writer) *Logger {
 	}
 }
 
-func (l *Logger) Log(level Level, message string) (int, error) {
-	return l.Logf(level, message+"\n")
-}
-
-func Log(level Level, message string) (int, error) {
-	return Default.Log(level, message)
-}
-
-func (l *Logger) Logf(level Level, format string, a ...interface{}) (int, error) {
+func (l *Logger) Log(level Level, format string, a ...interface{}) (int, error) {
 	if l.Level < level {
 		return 0, nil
 	}
-	return fmt.Fprintf(l.out, format, a...)
+	return fmt.Fprintf(l.out, format+"\n", a...)
 }
 
-func Logf(level Level, format string, a ...interface{}) (int, error) {
-	return Default.Logf(level, format, a...)
+func Log(level Level, format string, a ...interface{}) (int, error) {
+	return Default.Log(level, format, a...)
 }
 
-func (l *Logger) Fatal(s string) {
-	l.Fatalf(s + "\n")
-}
-
-func Fatal(s string) {
-	Default.Fatal(s)
-}
-
-func (l *Logger) Fatalf(s string, a ...interface{}) {
-	l.Logf(FATAL, "[FATAL] "+s, a...)
+func (l *Logger) Fatal(s string, a ...interface{}) {
+	l.Log(FATAL, "[FATAL] "+s, a...)
 	os.Exit(2)
 }
 
-func Fatalf(s string, a ...interface{}) {
-	Default.Fatalf(s, a...)
+func Fatal(s string, a ...interface{}) {
+	Default.Fatal(s, a...)
 }
 
-func (l *Logger) Info(s string) (int, error) {
-	return l.Infof(s + "\n")
+func (l *Logger) Info(s string, a ...interface{}) (int, error) {
+	return l.Log(INFO, "[INFO] "+s, a...)
 }
 
-func Info(s string) (int, error) {
-	return Default.Info(s)
-}
-
-func (l *Logger) Infof(s string, a ...interface{}) (int, error) {
-	return l.Logf(INFO, "[INFO] "+s, a...)
-}
-
-func Infof(s string, a ...interface{}) (int, error) {
-	return Default.Infof(s, a...)
+func Info(s string, a ...interface{}) (int, error) {
+	return Default.Info(s, a...)
 }

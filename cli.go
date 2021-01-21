@@ -116,7 +116,7 @@ func realMain(args []string) int {
 	}
 
 	log.Info("flags:")
-	log.Infof("  help=%v verbose=%v\n", helpFlag, verboseFlag)
+	log.Info("  help=%v verbose=%v", helpFlag, verboseFlag)
 	log.Info("config:")
 	log.Info("  " + configPath)
 
