@@ -149,12 +149,7 @@ func realMain(args []string) int {
 	}
 
 	task := config.FindTask(config.Default)
-	if i >= len(nzargs) {
-		if len(config.Default) == 0 {
-			fprintHelp(os.Stderr, config)
-			return 1
-		}
-	} else {
+	{
 		fullName := ""
 		i2 := i
 		for ; i2 < len(nzargs); i2++ {
@@ -177,6 +172,13 @@ func realMain(args []string) int {
 				task = newTask
 			}
 		}
+	}
+	if task == nil {
+		if i < len(nzargs) {
+			fmt.Fprintf(os.Stderr, "Unknown task: %v\n\n", nzargs[i].String())
+		}
+		fprintHelp(os.Stderr, config)
+		return 1
 	}
 
 	taskArgs := make([]string, len(nzargs[i:]))
