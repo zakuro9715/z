@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/goccy/go-yaml"
+	"github.com/zakuro9715/z/log"
 )
 
 type Envs map[string]string
@@ -27,6 +28,9 @@ func LoadConfig(filename string) (*Config, error) {
 		return nil, err
 	}
 	config.setup()
+
+	log.Info("config:")
+	log.Info("  " + filename)
 	return config, nil
 }
 

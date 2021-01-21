@@ -117,8 +117,6 @@ func realMain(args []string) int {
 
 	log.Info("flags:")
 	log.Info("  help=%v verbose=%v", helpFlag, verboseFlag)
-	log.Info("config:")
-	log.Info("  " + configPath)
 
 	config, err := config.LoadConfig(configPath)
 	if err != nil {
