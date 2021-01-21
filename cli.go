@@ -94,7 +94,6 @@ func realMain(args []string) int {
 
 	helpFlag := false
 	unknownFlag := false
-	verboseFlag := false
 	for ; i < len(nzargs); i++ {
 		arg := nzargs[i]
 		if arg.Type() != nzflag.TypeFlag {
@@ -106,7 +105,6 @@ func realMain(args []string) int {
 		case arg.Flag().Name == "V" || arg.Flag().Name == "version":
 			fprintVersion(os.Stdout)
 		case arg.Flag().Name == "v" || arg.Flag().Name == "verbose":
-			verboseFlag = true
 			log.Default.Level = log.INFO
 		case arg.Flag().Name == "c" || arg.Flag().Name == "config":
 			configPath = arg.Flag().Values[0]
@@ -116,7 +114,7 @@ func realMain(args []string) int {
 	}
 
 	log.Info("flags:")
-	log.Info("  help=%v verbose=%v", helpFlag, verboseFlag)
+	log.Info("  %v", nzargs[0:i])
 
 	config, err := config.LoadConfig(configPath)
 	if err != nil {
