@@ -51,6 +51,7 @@ type task struct {
 	Shell       string `yaml:"shell"`
 	Cmds        Cmds   `yaml:"run"`
 	Envs        Envs   `yaml:"env"`
+	AliasTo     string `yaml:"z"`
 	Config      *Config
 	Parent      *Task
 	Description string     `yaml:"desc"`
@@ -114,8 +115,10 @@ func (t *Task) setup(c *Config, parent *Task, name string) {
 }
 
 func (t *Task) Verify() error {
-	if len(t.Cmds) == 0 {
+	if len(t.Cmds) == 0 && len(t.AliasTo) == 0 {
 		return errors.New("Nothing to run")
+	} else if len(t.Cmds) > 0 && len(t.AliasTo) > 0 {
+		return errors.New("Cannot use both of `z` and `run`")
 	}
 	return nil
 }
