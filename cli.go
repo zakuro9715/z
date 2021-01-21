@@ -103,9 +103,9 @@ func realMain(args []string) int {
 		switch {
 		case isHelpFlag(arg.String()):
 			helpFlag = true
-		case arg.Flag().Name == "v" || arg.Flag().Name == "version":
+		case arg.Flag().Name == "V" || arg.Flag().Name == "version":
 			fprintVersion(os.Stdout)
-		case arg.Flag().Name == "verbose":
+		case arg.Flag().Name == "v" || arg.Flag().Name == "verbose":
 			verboseFlag = true
 			log.Default.Level = log.INFO
 		case arg.Flag().Name == "c" || arg.Flag().Name == "config":
