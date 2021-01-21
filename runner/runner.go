@@ -53,6 +53,22 @@ func setTaskDefaultEnvs(task *config.Task) error {
 	return setTaskDefaultEnvs(task.Parent)
 }
 
+func logEnv(task *config.Task) {
+	if n, _ := log.Info("envs:"); n == 0 {
+		return
+	}
+
+	envs := map[string]bool{}
+	for ; task != nil; task = task.Parent {
+		for k := range task.Envs {
+			envs[k] = true
+		}
+	}
+	for k := range envs {
+		log.Infof("  %v=%v\n", k, os.Getenv(k))
+	}
+}
+
 func (r *TaskRunner) Run(task *config.Task, args []string) error {
 	if err := task.Verify(); err != nil {
 		return err
@@ -70,6 +86,7 @@ func (r *TaskRunner) Run(task *config.Task, args []string) error {
 	log.Infof("shell: %v\n", shell)
 
 	log.Infof("task: '%v' args: %v\n", task.FullName, args)
+	logEnv(task)
 
 	for _, command := range task.Cmds {
 		if isScriptFile(command) {
