@@ -75,7 +75,7 @@ func fprintTaskHelp(w io.Writer, task *config.Task) {
 }
 
 func fprintVersion(w io.Writer) {
-	fmt.Fprintf(w, "z task runner %v\n", version)
+	fmt.Fprintf(w, "z %v\n", version)
 }
 
 func realMain(args []string) int {
