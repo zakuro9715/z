@@ -9,6 +9,7 @@ import (
 	"github.com/goccy/go-yaml"
 	"github.com/zakuro9715/nzflag"
 	"github.com/zakuro9715/z/config"
+	"github.com/zakuro9715/z/log"
 	"github.com/zakuro9715/z/runner"
 )
 
@@ -93,6 +94,7 @@ func realMain(args []string) int {
 
 	helpFlag := false
 	unknownFlag := false
+	verboseFlag := false
 	for ; i < len(nzargs); i++ {
 		arg := nzargs[i]
 		if arg.Type() != nzflag.TypeFlag {
@@ -103,12 +105,17 @@ func realMain(args []string) int {
 			helpFlag = true
 		case arg.Flag().Name == "v" || arg.Flag().Name == "version":
 			fprintVersion(os.Stdout)
+		case arg.Flag().Name == "verbose":
+			verboseFlag = true
+			log.Default.Level = log.INFO
 		case arg.Flag().Name == "c" || arg.Flag().Name == "config":
 			configPath = arg.Flag().Values[0]
 		default: // unknow flag
 			unknownFlag = true
 		}
 	}
+
+	log.Infof("flags: help=%v verbose=%v\n", helpFlag, verboseFlag)
 
 	config, err := config.LoadConfig(configPath)
 	if err != nil {
