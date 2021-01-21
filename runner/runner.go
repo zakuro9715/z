@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/zakuro9715/z/config"
+	"github.com/zakuro9715/z/log"
 )
 
 type TaskRunner struct {
@@ -66,6 +67,8 @@ func (r *TaskRunner) Run(task *config.Task, args []string) error {
 		return err
 	}
 	shell := task.GetShell()
+	log.Infof("shell: %v\n", shell)
+
 	for _, command := range task.Cmds {
 		if isScriptFile(command) {
 			return runWithOsStdio(exec.Command(shell, append([]string{command}, args...)...))
