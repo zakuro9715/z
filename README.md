@@ -161,4 +161,6 @@ tasks:                             # Task list
     env:                           # task local default env
       MESSAGE: message2
     run: echo $MESSAGE
+  alias.helloworld:
+    z: hello.world                 # Alias to other task
 ```

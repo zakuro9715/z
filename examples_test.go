@@ -55,3 +55,10 @@ func ExampleEnv() {
 	// message2
 	// system
 }
+
+func ExampleAlias() {
+	realMain([]string{"alias", "helloworld", "alias"})
+	// Output:
+	// hello world alias
+	// bye world alias
+}
