@@ -76,9 +76,13 @@ func Run(task *config.Task, args []string) error {
 		return err
 	}
 	shell := task.GetShell()
-	log.Infof("shell: %v\n", shell)
+	log.Info("shell:")
+	log.Info("  " + shell)
 
-	log.Infof("task: '%v' args: %v\n", task.FullName, args)
+	log.Info("task:")
+	log.Info("  " + task.FullName)
+	log.Info("args:")
+	log.Infof("  %v\n", args)
 	logEnv(task)
 
 	argsStr := strings.Join(args, " ")

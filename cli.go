@@ -115,8 +115,10 @@ func realMain(args []string) int {
 		}
 	}
 
-	log.Infof("flags: help=%v verbose=%v\n", helpFlag, verboseFlag)
-	log.Info("config: " + configPath)
+	log.Info("flags:")
+	log.Infof("  help=%v verbose=%v\n", helpFlag, verboseFlag)
+	log.Info("config:")
+	log.Info("  " + configPath)
 
 	config, err := config.LoadConfig(configPath)
 	if err != nil {
