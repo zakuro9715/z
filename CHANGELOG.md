@@ -1,6 +1,7 @@
 v0.X.X / 2021-XX-XX
 ===================
 
+* Alias task
 * Auto generate task description
 * Verbose flag (`-v`)
 * Bug fixes
