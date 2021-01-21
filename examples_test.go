@@ -4,8 +4,11 @@ import (
 	"os"
 )
 
-func ExampleHello() {
+func init() {
 	os.Setenv("ZCONFIG", "examples/hello.yaml")
+}
+
+func ExampleHello() {
 	realMain([]string{})
 	realMain([]string{"arg"})
 	realMain([]string{"hello"})
@@ -29,7 +32,6 @@ func ExampleHello() {
 }
 
 func ExampleEcho() {
-	os.Setenv("ZCONFIG", "examples/hello.yaml")
 	realMain([]string{"echo", "hello"})
 	realMain([]string{"echo", "twice", "hi"})
 	// Output:
@@ -39,7 +41,6 @@ func ExampleEcho() {
 }
 
 func ExampleEnv() {
-	os.Setenv("ZCONFIG", "examples/hello.yaml")
 	os.Unsetenv("MESSAGE")
 	realMain([]string{"echo.env.message"})
 	os.Setenv("MESSAGE", "system")
