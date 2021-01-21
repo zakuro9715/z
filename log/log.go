@@ -9,7 +9,7 @@ import (
 type Level int
 
 const (
-	ERROR Level = iota
+	FATAL Level = iota
 	INFO
 )
 
@@ -18,7 +18,7 @@ type Logger struct {
 	out   io.Writer
 }
 
-var Default = New(ERROR, os.Stderr)
+var Default = New(FATAL, os.Stderr)
 
 func New(level Level, out io.Writer) *Logger {
 	return &Logger{
@@ -49,20 +49,20 @@ func Logf(level Level, format string, a ...interface{}) (int, error) {
 	return Default.Logf(level, format, a...)
 }
 
-func (l *Logger) Error(s string) (int, error) {
-	return l.Log(ERROR, s)
+func (l *Logger) Fatal(s string) (int, error) {
+	return l.Log(FATAL, s)
 }
 
-func Error(s string) (int, error) {
-	return Default.Error(s)
+func Fatal(s string) (int, error) {
+	return Default.Fatal(s)
 }
 
-func (l *Logger) Errorf(s string, a ...interface{}) (int, error) {
-	return l.Logf(ERROR, s, a...)
+func (l *Logger) Fatalf(s string, a ...interface{}) (int, error) {
+	return l.Logf(FATAL, s, a...)
 }
 
-func Errorf(s string, a ...interface{}) (int, error) {
-	return Default.Errorf(s, a...)
+func Fatalf(s string, a ...interface{}) (int, error) {
+	return Default.Fatalf(s, a...)
 }
 
 func (l *Logger) Info(s string) (int, error) {
