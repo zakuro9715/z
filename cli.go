@@ -101,7 +101,7 @@ func realMain(args []string) int {
 		switch {
 		case isHelpFlag(arg.String()):
 			helpFlag = true
-		case arg.Flag().Name == "v" || arg.Flag().Name == "--version":
+		case arg.Flag().Name == "v" || arg.Flag().Name == "version":
 			fprintVersion(os.Stdout)
 		case arg.Flag().Name == "c" || arg.Flag().Name == "config":
 			configPath = arg.Flag().Values[0]
