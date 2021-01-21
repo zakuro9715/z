@@ -29,11 +29,12 @@ func LoadConfig(filename string) (*Config, error) {
 	}
 	config.setup()
 
-	log.Info("config:")
-	log.Info("  path:")
-	log.Info("    " + filename)
-	log.Info("  default:")
-	log.Info("    " + config.Default)
+	if n, _ := log.Info("config:"); n > 0 {
+		log.Info("  path:")
+		log.Info("    " + filename)
+		log.Info("  default:")
+		log.Info("    " + config.Default)
+	}
 	return config, nil
 }
 
