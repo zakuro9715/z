@@ -87,19 +87,12 @@ func fprintVersion(w io.Writer) {
 	fmt.Fprintf(w, "z %v\n", version)
 }
 
-func realMain(args []string) int {
-	i := 0
+// exit_code == -1 means don't exit
+func processFlags(nzargs []nzflag.Value) (i int, _ *config.Config, code int) {
 	configPath := "z.yaml"
 	if p, ok := os.LookupEnv("ZCONFIG"); ok {
 		configPath = p
 	}
-
-	nzargs := (&nzflag.App{
-		FlagOption: map[string]nzflag.FlagOption{
-			"c":      nzflag.HasValue,
-			"config": nzflag.HasValue,
-		},
-	}).Normalize(args)
 
 	helpFlag := false
 	unknownFlag := false
@@ -135,17 +128,34 @@ func realMain(args []string) int {
 	config, err := config.LoadConfig(configPath)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, yaml.FormatError(err, true, true))
-		return 1
+		return i, config, 1
 	}
 
 	if unknownFlag {
 		fprintHelp(os.Stderr, config)
-		return 0
+		return i, config, 0
 	}
 
 	if helpFlag {
 		fprintHelp(os.Stdout, config)
-		return 0
+		return i, config, 0
+	}
+
+	return i, config, -1
+}
+
+func realMain(args []string) (code int) {
+	nzargs := (&nzflag.App{
+		FlagOption: map[string]nzflag.FlagOption{
+			"c":      nzflag.HasValue,
+			"config": nzflag.HasValue,
+		},
+	}).Normalize(args)
+
+	var i int
+	var config *config.Config
+	if i, config, code = processFlags(nzargs); code >= 0 {
+		return
 	}
 
 	task, _ := config.FindTask(config.Default)
