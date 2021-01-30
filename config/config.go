@@ -11,12 +11,21 @@ import (
 
 type Envs map[string]string
 
+type config struct {
+	Shell   string `yaml:"shell"`
+	Default string `yaml:"default"`
+	Tasks   Tasks  `yaml:"tasks"`
+	Envs    Envs   `yaml:"env"`
+}
+
 type Config struct {
-	Shell    string `yaml:"shell"`
-	Default  string `yaml:"default"`
-	Tasks    Tasks  `yaml:"tasks"`
-	Envs     Envs   `yaml:"env"`
+	config
 	allTasks Tasks
+}
+
+func (c *Config) UnmarshalYAML(data []byte) error {
+	err := yaml.Unmarshal(data, &c.config)
+	return err
 }
 
 func LoadConfig(filename string) (*Config, error) {

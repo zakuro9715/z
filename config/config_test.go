@@ -22,17 +22,20 @@ func TestLoadConfigError(t *testing.T) {
 
 func TestSetup(t *testing.T) {
 	c := &Config{
-		Default: "hello.world",
-		Tasks: map[string]*Task{
-			"hello": {
-				task{
-					Tasks: map[string]*Task{
-						"world": {},
+		config{
+			Default: "hello.world",
+			Tasks: map[string]*Task{
+				"hello": {
+					task{
+						Tasks: map[string]*Task{
+							"world": {},
+						},
 					},
 				},
+				"echo.hey": {},
 			},
-			"echo.hey": {},
 		},
+		nil,
 	}
 
 	assert.Empty(t, c.Tasks["hello"].Name)
@@ -60,16 +63,19 @@ func TestSetup(t *testing.T) {
 
 func TestFindTask(t *testing.T) {
 	c := &Config{
-		Default: "hello.world",
-		Tasks: map[string]*Task{
-			"hello": {
-				task{
-					Tasks: map[string]*Task{
-						"world": {},
+		config{
+			Default: "hello.world",
+			Tasks: map[string]*Task{
+				"hello": {
+					task{
+						Tasks: map[string]*Task{
+							"world": {},
+						},
 					},
 				},
 			},
 		},
+		nil,
 	}
 	c.setup()
 
