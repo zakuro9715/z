@@ -2,10 +2,38 @@ package main
 
 import (
 	"os"
+	"testing"
+
+	"github.com/zakuro9715/z/cli"
 )
 
 func init() {
 	os.Setenv("ZCONFIG", "examples/hello.yaml")
+}
+
+func BenchmarkHelloExapmle(b *testing.B) {
+	os.Setenv("ZSILENT", "1")
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		cli.Main([]string{})
+		cli.Main([]string{"arg"})
+		cli.Main([]string{"hello"})
+		cli.Main([]string{"hello", "world"})
+		cli.Main([]string{"hello.world"})
+		cli.Main([]string{"hello", "script"})
+		cli.Main([]string{"hello", "python"})
+
+		os.Unsetenv("MESSAGE")
+		cli.Main([]string{"echo.env.message"})
+		os.Setenv("MESSAGE", "system")
+		cli.Main([]string{"echo.env.message"})
+		os.Unsetenv("MESSAGE")
+		cli.Main([]string{"echo", "env", "message2"})
+		os.Setenv("MESSAGE", "system")
+		cli.Main([]string{"echo", "env", "message2"})
+
+		cli.Main([]string{"alias", "helloworld", "alias"})
+	}
 }
 
 func ExampleHello() {
