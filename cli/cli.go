@@ -1,4 +1,4 @@
-package main
+package cli
 
 import (
 	"fmt"
@@ -182,7 +182,7 @@ func findTask(i *int, nzargs []nzflag.Value, config *config.Config) (task *confi
 	return task, -1
 }
 
-func realMain(args []string) (code int) {
+func Main(args []string) (code int) {
 	nzargs := (&nzflag.App{
 		FlagOption: map[string]nzflag.FlagOption{
 			"c":      nzflag.HasValue,

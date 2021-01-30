@@ -9,13 +9,13 @@ func init() {
 }
 
 func ExampleHello() {
-	realMain([]string{})
-	realMain([]string{"arg"})
-	realMain([]string{"hello"})
-	realMain([]string{"hello", "world"})
-	realMain([]string{"hello.world"})
-	realMain([]string{"hello", "script"})
-	realMain([]string{"hello", "python"})
+	cli.Main([]string{})
+	cli.Main([]string{"arg"})
+	cli.Main([]string{"hello"})
+	cli.Main([]string{"hello", "world"})
+	cli.Main([]string{"hello.world"})
+	cli.Main([]string{"hello", "script"})
+	cli.Main([]string{"hello", "python"})
 	// Output:
 	// hello world
 	// bye world
@@ -32,8 +32,8 @@ func ExampleHello() {
 }
 
 func ExampleEcho() {
-	realMain([]string{"echo", "hello"})
-	realMain([]string{"echo", "twice", "hi"})
+	cli.Main([]string{"echo", "hello"})
+	cli.Main([]string{"echo", "twice", "hi"})
 	// Output:
 	// hello
 	// hi
@@ -42,13 +42,13 @@ func ExampleEcho() {
 
 func ExampleEnv() {
 	os.Unsetenv("MESSAGE")
-	realMain([]string{"echo.env.message"})
+	cli.Main([]string{"echo.env.message"})
 	os.Setenv("MESSAGE", "system")
-	realMain([]string{"echo.env.message"})
+	cli.Main([]string{"echo.env.message"})
 	os.Unsetenv("MESSAGE")
-	realMain([]string{"echo", "env", "message2"})
+	cli.Main([]string{"echo", "env", "message2"})
 	os.Setenv("MESSAGE", "system")
-	realMain([]string{"echo", "env", "message2"})
+	cli.Main([]string{"echo", "env", "message2"})
 	// Output:
 	// message
 	// system
@@ -57,7 +57,7 @@ func ExampleEnv() {
 }
 
 func ExampleAlias() {
-	realMain([]string{"alias", "helloworld", "alias"})
+	cli.Main([]string{"alias", "helloworld", "alias"})
 	// Output:
 	// hello world alias
 	// bye world alias
