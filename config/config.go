@@ -9,6 +9,21 @@ import (
 	"github.com/zakuro9715/z/log"
 )
 
+type oneOrMoreStr []string
+
+func (v *oneOrMoreStr) UnmarshalYAML(data []byte) error {
+	var str string
+	if err := yaml.Unmarshal(data, &str); err == nil {
+		*v = []string{str}
+		return nil
+	}
+
+	ss := []string{}
+	err := yaml.Unmarshal(data, &ss)
+	*v = ss
+	return err
+}
+
 type Envs map[string]string
 
 type config struct {

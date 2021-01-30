@@ -7,21 +7,6 @@ import (
 	"github.com/goccy/go-yaml"
 )
 
-type Cmds []string
-
-func (cmds *Cmds) UnmarshalYAML(data []byte) error {
-	var str string
-	if err := yaml.Unmarshal(data, &str); err == nil {
-		*cmds = []string{str}
-		return nil
-	}
-
-	ss := []string{}
-	err := yaml.Unmarshal(data, &ss)
-	*cmds = ss
-	return err
-}
-
 type Hooks struct {
 	Pre  string `yaml:"pre"`
 	Post string `yaml:"post"`
@@ -48,10 +33,10 @@ type task struct {
 	IsDefault   bool
 	Name        string
 	FullName    string
-	Shell       string `yaml:"shell"`
-	Cmds        Cmds   `yaml:"run"`
-	Envs        Envs   `yaml:"env"`
-	AliasTo     string `yaml:"z"`
+	Shell       string       `yaml:"shell"`
+	Cmds        oneOrMoreStr `yaml:"run"`
+	Envs        Envs         `yaml:"env"`
+	AliasTo     string       `yaml:"z"`
 	Config      *Config
 	Parent      *Task
 	Description string     `yaml:"desc"`
