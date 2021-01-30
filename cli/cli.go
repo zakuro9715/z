@@ -210,6 +210,9 @@ func Main(args []string) (code int) {
 	for i, arg := range nzargs[i:] {
 		taskArgs[i] = arg.String()
 	}
-	runner.Run(rconfig, task, taskArgs)
+	if err := runner.Run(rconfig, task, taskArgs); err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		return 1
+	}
 	return 0
 }
