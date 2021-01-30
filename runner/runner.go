@@ -60,6 +60,7 @@ type Runner struct {
 }
 
 type Config struct {
+	Silent bool
 }
 
 func New(config *Config) *Runner {
@@ -112,7 +113,9 @@ func (r Runner) Run(task *config.Task, args []string) error {
 
 func (r *Runner) runCmd(cmd *exec.Cmd) error {
 	cmd.Stdin = os.Stdin
-	cmd.Stdout = os.Stdout
+	if !r.config.Silent {
+		cmd.Stdout = os.Stdout
+	}
 	cmd.Stderr = os.Stderr
 	return cmd.Run()
 }

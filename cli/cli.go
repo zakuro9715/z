@@ -27,6 +27,7 @@ Usage:
 const (
 	ENV_KEY_ZCONNFIG = "ZCONFIG"
 	ENV_KEY_ZVERBOSE = "ZVERBOSE"
+	ENV_KEY_ZSILENT  = "ZSILENT"
 )
 
 func isHelpFlag(s string) bool {
@@ -88,7 +89,7 @@ func fprintVersion(w io.Writer) {
 }
 
 // exit_code == -1 means don't exit
-func processFlags(nzargs []nzflag.Value) (i int, _ *config.Config, code int) {
+func processFlags(nzargs []nzflag.Value) (i int, _ *config.Config, _ *runner.Config, code int) {
 	configPath := "z.yaml"
 	if p, ok := os.LookupEnv("ZCONFIG"); ok {
 		configPath = p
@@ -97,6 +98,7 @@ func processFlags(nzargs []nzflag.Value) (i int, _ *config.Config, code int) {
 	helpFlag := false
 	unknownFlag := false
 	verboseFlag := isEnvValTrue(os.Getenv(ENV_KEY_ZVERBOSE))
+	rconfig := &runner.Config{Silent: isEnvValTrue(os.Getenv(ENV_KEY_ZSILENT))}
 	for ; i < len(nzargs); i++ {
 		arg := nzargs[i]
 		if arg.Type() != nzflag.TypeFlag {
@@ -111,6 +113,8 @@ func processFlags(nzargs []nzflag.Value) (i int, _ *config.Config, code int) {
 			verboseFlag = true
 		case arg.Flag().Name == "c" || arg.Flag().Name == "config":
 			configPath = arg.Flag().Values[0]
+		case arg.Flag().Name == "silent":
+			rconfig.Silent = true
 		default: // unknow flag
 			unknownFlag = true
 		}
@@ -128,20 +132,20 @@ func processFlags(nzargs []nzflag.Value) (i int, _ *config.Config, code int) {
 	config, err := config.LoadConfig(configPath)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, yaml.FormatError(err, true, true))
-		return i, config, 1
+		return i, config, rconfig, 1
 	}
 
 	if unknownFlag {
 		fprintHelp(os.Stderr, config)
-		return i, config, 0
+		return i, config, rconfig, 0
 	}
 
 	if helpFlag {
 		fprintHelp(os.Stdout, config)
-		return i, config, 0
+		return i, config, rconfig, 0
 	}
 
-	return i, config, -1
+	return i, config, rconfig, -1
 }
 
 func findTask(i *int, nzargs []nzflag.Value, config *config.Config) (task *config.Task, code int) {
@@ -193,7 +197,8 @@ func Main(args []string) (code int) {
 	var i int
 	var task *config.Task
 	var config *config.Config
-	if i, config, code = processFlags(nzargs); code >= 0 {
+	var rconfig *runner.Config
+	if i, config, rconfig, code = processFlags(nzargs); code >= 0 {
 		return
 	}
 
@@ -205,7 +210,6 @@ func Main(args []string) (code int) {
 	for i, arg := range nzargs[i:] {
 		taskArgs[i] = arg.String()
 	}
-	r := runner.New(&runner.Config{})
-	r.Run(task, taskArgs)
+	runner.Run(rconfig, task, taskArgs)
 	return 0
 }
