@@ -21,3 +21,6 @@ tasks:
   run:
     - go install
     - go run .
+  bench:
+    - go install
+    - go test -bench . -benchmem
