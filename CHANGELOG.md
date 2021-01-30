@@ -1,6 +1,7 @@
-v0.X.X / 2021-XX-XX
+v0.5.0 / 2021-01-30
 ===================
 
+* Silent flag (`--silent`)
 * Alias task
 * Auto generate task description
 * Verbose flag (`-v`)
