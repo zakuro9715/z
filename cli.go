@@ -144,6 +144,44 @@ func processFlags(nzargs []nzflag.Value) (i int, _ *config.Config, code int) {
 	return i, config, -1
 }
 
+func findTask(i *int, nzargs []nzflag.Value, config *config.Config) (task *config.Task, code int) {
+	task, _ = config.FindTask(config.Default)
+	{
+		fullName := ""
+		i2 := *i
+		for ; i2 < len(nzargs); i2++ {
+			arg := nzargs[i2]
+			if isHelpFlag(nzargs[i2].String()) {
+				fprintTaskHelp(os.Stdout, task)
+				return nil, 0
+			}
+			if arg.String() == "--" {
+				*i = i2 + 1
+				break
+			}
+			if len(fullName) > 0 {
+				fullName += "."
+			}
+			fullName += arg.String()
+			if newTask, err := config.FindTask(fullName); err == nil {
+				*i = i2 + 1
+				task = newTask
+				if len(task.AliasTo) > 0 {
+					task, _ = config.FindTask(task.AliasTo)
+				}
+			}
+		}
+	}
+	if task == nil {
+		if *i < len(nzargs) {
+			fmt.Fprintf(os.Stderr, "Unknown task: %v\n\n", nzargs[*i].String())
+		}
+		fprintHelp(os.Stderr, config)
+		return nil, 1
+	}
+	return task, -1
+}
+
 func realMain(args []string) (code int) {
 	nzargs := (&nzflag.App{
 		FlagOption: map[string]nzflag.FlagOption{
@@ -153,44 +191,14 @@ func realMain(args []string) (code int) {
 	}).Normalize(args)
 
 	var i int
+	var task *config.Task
 	var config *config.Config
 	if i, config, code = processFlags(nzargs); code >= 0 {
 		return
 	}
 
-	task, _ := config.FindTask(config.Default)
-	{
-		fullName := ""
-		i2 := i
-		for ; i2 < len(nzargs); i2++ {
-			arg := nzargs[i2]
-			if isHelpFlag(nzargs[i2].String()) {
-				fprintTaskHelp(os.Stdout, task)
-				return 0
-			}
-			if arg.String() == "--" {
-				i = i2 + 1
-				break
-			}
-			if len(fullName) > 0 {
-				fullName += "."
-			}
-			fullName += arg.String()
-			if newTask, err := config.FindTask(fullName); err == nil {
-				i = i2 + 1
-				task = newTask
-				if len(task.AliasTo) > 0 {
-					task, _ = config.FindTask(task.AliasTo)
-				}
-			}
-		}
-	}
-	if task == nil {
-		if i < len(nzargs) {
-			fmt.Fprintf(os.Stderr, "Unknown task: %v\n\n", nzargs[i].String())
-		}
-		fprintHelp(os.Stderr, config)
-		return 1
+	if task, code = findTask(&i, nzargs, config); code >= 0 {
+		return
 	}
 
 	taskArgs := make([]string, len(nzargs[i:]))
