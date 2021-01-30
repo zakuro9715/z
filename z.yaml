@@ -24,3 +24,12 @@ tasks:
   bench:
     - go install
     - go test -bench . -benchmem
+  bench.write: |
+    txt=$(cat benchmark.txt)
+
+    bar="=========================="
+    header="$bar $(date '+%Y-%m-%d'): $(git rev-parse HEAD) $bar"
+    echo $header > benchmark.txt
+    z bench >> benchmark.txt
+    echo $header | sed 's/./=/g' >> benchmark.txt
+    echo "$txt" >> benchmark.txt
