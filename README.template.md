@@ -8,6 +8,21 @@
 
 Simple task runner
 
+# Philosophy
+
+- Simple
+- Easy
+- Intuitive
+- Useful
+
+# Features
+
+- Default task
+- Nested tasks
+- Alias
+- Shorthand
+- And more...
+
 # Installation
 
 Via gobinaries
