@@ -182,3 +182,9 @@ tasks:                             # Task list
   alias.helloworld:
     z: hello.world                 # Alias to other task
 ```
+
+```examples/npm.yaml
+default: npm.script
+tasks:
+  npm.script: npm run
+```
