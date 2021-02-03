@@ -19,8 +19,8 @@ Z is a simple and useful task runner.
 
 ## Features
 
-- Default task
 - Nested tasks
+- Default task
 - Alias
 - Shorthand
 - And more...
@@ -38,6 +38,63 @@ By go install
 ```
 go install github.com/zakuro9715/z
 ```
+
+# Compare with other tools
+
+## [Robo](https://github.com/tj/robo)
+
+Z is strongly inspired by Robo
+
+### Good
+
+- Easy to use
+- Simple configuration
+- Easy to install
+
+### Bad
+
+- No nested tasks
+- Not enough features
+- No default task
+
+## Make
+
+### Good
+
+- Easy to use
+- Run anyware
+
+### Cons
+
+- Make is not task runner
+- Makefile is difficult
+- No nested tasks
+
+## npm script
+
+### Pros
+
+- Easy to use
+- Simple configuration
+- No extra tool is required in nodejs project.
+
+### Cons
+
+- Not suitable for other than nodejs project
+- No nested tasks
+- script must be one-liner
+
+## [Task](https://taskfile.dev) (go-task/task)
+
+### Pros
+
+- Many features
+- Good documentation
+
+### Cons
+
+- No nested tasks
+- Too many features
 
 # Usage
 
