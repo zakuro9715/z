@@ -6,7 +6,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 
-Simple task runner
+Z is a simple and useful task runner.
 
 # Overview
 
@@ -100,8 +100,6 @@ $ z hello world
 sh -c "echo hello1 world"
 sh -c "echo hello2 world"
 ```
-
-You can pass flags and args. They will be passed to each commands
 
 ### Default task
 
