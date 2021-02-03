@@ -8,14 +8,16 @@
 
 Simple task runner
 
-# Philosophy
+# Overview
+
+## Philosophy
 
 - Simple
 - Easy
 - Intuitive
 - Useful
 
-# Features
+## Features
 
 - Default task
 - Nested tasks
@@ -23,7 +25,7 @@ Simple task runner
 - Shorthand
 - And more...
 
-# Installation
+## Installation
 
 Via gobinaries
 
@@ -43,9 +45,9 @@ go install github.com/zakuro9715/z
 z tasks... args...
 ```
 
-# Config
+## Config
 
-## Run
+### Run
 
 Run with specified shell (default: sh)
 
@@ -101,7 +103,7 @@ sh -c "echo hello2 world"
 
 You can pass flags and args. They will be passed to each commands
 
-## Default task
+### Default task
 
 You can use default task
 
@@ -118,7 +120,7 @@ $ z
 hello world
 ```
 
-## Task Alias
+### Task Alias
 
 ```yaml
 tasks:
