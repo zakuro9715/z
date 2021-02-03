@@ -117,6 +117,10 @@ $z helloworld
 hello world
 ```
 
+# Use cases
+
+- [zakuro9715/v-zconfig](https://github.com/zakuro9715/v-zconfig/blob/main/z.yaml)
+
 # Examples
 
 See also [Examples Test](./examples_test.go)
