@@ -15,7 +15,7 @@ import (
 
 var exit = os.Exit
 
-var version = "v0.4.0 or later" // Set via ldflags
+var Version string // Set via wain.init
 
 const helpTextBase = `
 z - Z Task runner
@@ -85,7 +85,7 @@ func fprintTaskHelp(w io.Writer, task *config.Task) {
 }
 
 func fprintVersion(w io.Writer) {
-	fmt.Fprintf(w, "z %v\n", version)
+	fmt.Fprintf(w, "z %v\n", Version)
 }
 
 // exit_code == -1 means don't exit
