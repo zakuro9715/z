@@ -109,6 +109,8 @@ func processFlags(nzargs []nzflag.Value) (i int, _ *config.Config, _ *runner.Con
 			helpFlag = true
 		case arg.Flag().Name == "V" || arg.Flag().Name == "version":
 			fprintVersion(os.Stdout)
+			code = 0
+			return
 		case arg.Flag().Name == "v" || arg.Flag().Name == "verbose":
 			verboseFlag = true
 		case arg.Flag().Name == "c" || arg.Flag().Name == "config":
@@ -137,7 +139,7 @@ func processFlags(nzargs []nzflag.Value) (i int, _ *config.Config, _ *runner.Con
 
 	if unknownFlag {
 		fprintHelp(os.Stderr, config)
-		return i, config, rconfig, 0
+		return i, config, rconfig, 1
 	}
 
 	if helpFlag {
