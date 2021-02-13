@@ -1,3 +1,9 @@
+Planed to implement
+===================
+
+* Variables
+* Shell Completion
+
 v0.x.x / 2021-xx-xx
 ===================
 
