@@ -188,6 +188,17 @@ tasks:
 $z helloworld
 hello world
 ```
+### PATH
+
+You can specify additional PATH
+
+```
+tasks:
+    hello:
+        path: ./bin
+        run: command-in-bin-dir
+```
+
 
 # Use cases
 
@@ -232,7 +243,9 @@ tasks:                             # Task list
     tasks:                         # Sub task list
       script:
         run: examples/hello.sh     # Run script
-
+      script.with_path:
+        path: examples             # Add path
+        run: hello.sh
       python:
         shell: python
         run: print('hello python')

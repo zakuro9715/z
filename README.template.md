@@ -188,6 +188,17 @@ tasks:
 $z helloworld
 hello world
 ```
+### PATH
+
+You can specify additional PATH
+
+```
+tasks:
+    hello:
+        path: ./bin
+        run: command-in-bin-dir
+```
+
 
 # Use cases
 
