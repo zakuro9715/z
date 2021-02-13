@@ -39,6 +39,10 @@ func setTaskDefaultEnvs(task *config.Task) error {
 	return setTaskDefaultEnvs(task.Parent)
 }
 
+func prepareEnv(task *config.Task) error {
+	return setTaskDefaultEnvs(task)
+}
+
 func logEnv(task *config.Task) {
 	if n, _ := log.Info("envs:"); n == 0 {
 		return
@@ -76,7 +80,7 @@ func (r Runner) Run(task *config.Task, args []string) error {
 		return err
 	}
 
-	if err := setTaskDefaultEnvs(task); err != nil {
+	if err := prepareEnv(task); err != nil {
 		return err
 	}
 
