@@ -33,10 +33,10 @@ type task struct {
 	IsDefault   bool
 	Name        string
 	FullName    string
-	Shell       string       `yaml:"shell"`
-	Cmds        oneOrMoreStr `yaml:"run"`
-	Envs        Envs         `yaml:"env"`
-	AliasTo     string       `yaml:"z"`
+	Shell       string          `yaml:"shell"`
+	Cmds        yaml.StringList `yaml:"run"`
+	Envs        Envs            `yaml:"env"`
+	AliasTo     string          `yaml:"z"`
 	Config      *Config
 	Parent      *Task
 	Description string     `yaml:"desc"`
