@@ -54,10 +54,10 @@ func preparePath(task *config.Task) error {
 		if err := preparePath(task.Parent); err != nil {
 			return err
 		}
-		for _, path := range task.Paths {
-			if err := prependPath(path); err != nil {
-				return err
-			}
+	}
+	for _, path := range task.Paths {
+		if err := prependPath(path); err != nil {
+			return err
 		}
 	}
 	return nil
