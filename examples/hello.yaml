@@ -17,7 +17,9 @@ tasks:                             # Task list
     tasks:                         # Sub task list
       script:
         run: examples/hello.sh     # Run script
-
+      script.with_path:
+        path: examples             # Add path
+        run: hello.sh
       python:
         shell: python
         run: print('hello python')

@@ -39,8 +39,35 @@ func setTaskDefaultEnvs(task *config.Task) error {
 	return setTaskDefaultEnvs(task.Parent)
 }
 
+func prependPath(path string) error {
+	return os.Setenv("PATH", path+":"+os.Getenv("PATH"))
+}
+
+func preparePath(task *config.Task) error {
+	if task.Parent == nil {
+		for _, path := range task.Config.Paths {
+			if err := prependPath(path); err != nil {
+				return err
+			}
+		}
+	} else {
+		if err := preparePath(task.Parent); err != nil {
+			return err
+		}
+		for _, path := range task.Paths {
+			if err := prependPath(path); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
 func prepareEnv(task *config.Task) error {
-	return setTaskDefaultEnvs(task)
+	if err := setTaskDefaultEnvs(task); err != nil {
+		return err
+	}
+	return preparePath(task)
 }
 
 func logEnv(task *config.Task) {

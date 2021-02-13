@@ -36,6 +36,7 @@ type task struct {
 	Shell       string          `yaml:"shell"`
 	Cmds        yaml.StringList `yaml:"run"`
 	Envs        Envs            `yaml:"env"`
+	Paths       yaml.StringList `yaml:"path"`
 	AliasTo     string          `yaml:"z"`
 	Config      *Config
 	Parent      *Task

@@ -43,6 +43,7 @@ func ExampleHello() {
 	cli.Main([]string{"hello", "world"})
 	cli.Main([]string{"hello.world"})
 	cli.Main([]string{"hello", "script"})
+	cli.Main([]string{"hello", "script", "with_path"})
 	cli.Main([]string{"hello", "python"})
 	// Output:
 	// hello world
@@ -55,6 +56,7 @@ func ExampleHello() {
 	// bye world
 	// hello world
 	// bye world
+	// hello script
 	// hello script
 	// hello python
 }

@@ -38,10 +38,11 @@ func (v *Envs) UnmarshalYAML(data []byte) error {
 }
 
 type config struct {
-	Shell   string `yaml:"shell"`
-	Default string `yaml:"default"`
-	Tasks   Tasks  `yaml:"tasks"`
-	Envs    Envs   `yaml:"env"`
+	Shell   string          `yaml:"shell"`
+	Default string          `yaml:"default"`
+	Tasks   Tasks           `yaml:"tasks"`
+	Envs    Envs            `yaml:"env"`
+	Paths   yaml.StringList `yaml:"path"`
 }
 
 type Config struct {
