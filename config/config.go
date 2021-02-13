@@ -5,25 +5,21 @@ import (
 	"io/ioutil"
 	"strings"
 
-	"github.com/goccy/go-yaml"
 	"github.com/zakuro9715/z/log"
-)
-
-var (
-	yamlOptions = []yaml.DecodeOption{yaml.DisallowDuplicateKey()}
+	"github.com/zakuro9715/z/yaml"
 )
 
 type oneOrMoreStr []string
 
 func (v *oneOrMoreStr) UnmarshalYAML(data []byte) error {
 	var str string
-	if err := yaml.UnmarshalWithOptions(data, &str, yamlOptions...); err == nil {
+	if err := yaml.Unmarshal(data, &str); err == nil {
 		*v = []string{str}
 		return nil
 	}
 
 	ss := []string{}
-	err := yaml.UnmarshalWithOptions(data, &ss, yamlOptions...)
+	err := yaml.Unmarshal(data, &ss)
 	*v = ss
 	return err
 }
@@ -43,7 +39,7 @@ type Config struct {
 }
 
 func (c *Config) UnmarshalYAML(data []byte) error {
-	err := yaml.UnmarshalWithOptions(data, &c.config, yamlOptions...)
+	err := yaml.Unmarshal(data, &c.config)
 	return err
 }
 
@@ -53,7 +49,7 @@ func LoadConfig(filename string) (*Config, error) {
 		return nil, err
 	}
 	config := new(Config)
-	if err = yaml.UnmarshalWithOptions(data, config, yamlOptions...); err != nil {
+	if err = yaml.Unmarshal(data, config); err != nil {
 		return nil, err
 	}
 	config.setup()

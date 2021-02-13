@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/goccy/go-yaml"
+	"github.com/zakuro9715/z/yaml"
 )
 
 type Hooks struct {
@@ -52,18 +52,18 @@ type Tasks map[string]*Task
 
 func (task *Task) UnmarshalYAML(data []byte) error {
 	var str string
-	if err := yaml.UnmarshalWithOptions(data, &str, yamlOptions...); err == nil {
+	if err := yaml.Unmarshal(data, &str); err == nil {
 		task.Cmds = []string{str}
 		task.Description = str
 		return nil
 	}
 	var strs []string
-	if err := yaml.UnmarshalWithOptions(data, &strs, yamlOptions...); err == nil {
+	if err := yaml.Unmarshal(data, &strs); err == nil {
 		task.Cmds = strs
 		task.Description = strings.Join(strs, "\n")
 		return nil
 	}
-	if err := yaml.UnmarshalWithOptions(data, &task.task, yamlOptions...); err != nil {
+	if err := yaml.Unmarshal(data, &task.task); err != nil {
 		return err
 	}
 	if len(task.Description) == 0 {
