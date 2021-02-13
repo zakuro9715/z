@@ -11,6 +11,32 @@ import (
 
 type Envs map[string]string
 
+func (v *Envs) UnmarshalYAML(data []byte) error {
+	dict := map[string]string{}
+	list := yaml.StringList{}
+	if err := yaml.Unmarshal(data, &list); err == nil {
+		for _, s := range list {
+			parts := strings.SplitN(s, "=", 2)
+			key := strings.TrimSpace(parts[0])
+			switch len(parts) {
+			case 1:
+				dict[key] = ""
+			case 2:
+				dict[key] = strings.TrimSpace(parts[1])
+			default:
+				panic("unreachable code")
+			}
+		}
+		*v = dict
+		return nil
+	}
+	if err := yaml.Unmarshal(data, &dict); err != nil {
+		return err
+	}
+	*v = dict
+	return nil
+}
+
 type config struct {
 	Shell   string `yaml:"shell"`
 	Default string `yaml:"default"`

@@ -33,8 +33,7 @@ tasks:                             # Task list
     - echo
   echo.env.message: echo $MESSAGE  # use env
   echo.env.message2:
-    env:                           # task local default env
-      MESSAGE: message2
+    env: MESSAGE=message2          # task local default env
     run: echo $MESSAGE
   alias.helloworld:
     z: hello.world                 # Alias to other task
