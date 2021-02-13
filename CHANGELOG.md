@@ -4,10 +4,11 @@ Planed to implement
 * Variables
 * Shell Completion
 
-v0.x.x / 2021-xx-xx
+v0.6.0 / 2021-02-13
 ===================
 
 * Accepts `KEY=VALUE` style env
+* PATH
 
 v0.5.2 / 2021-02-12
 ===================
