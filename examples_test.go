@@ -70,7 +70,8 @@ func ExampleEcho() {
 	// hi
 }
 
-func ExampleEnv() {
+func ExampleVarAndEnv() {
+	cli.Main([]string{"echo.var.value"})
 	os.Unsetenv("MESSAGE")
 	cli.Main([]string{"echo.env.message"})
 	os.Setenv("MESSAGE", "system")
@@ -80,6 +81,7 @@ func ExampleEnv() {
 	os.Setenv("MESSAGE", "system")
 	cli.Main([]string{"echo", "env", "message2"})
 	// Output:
+	// value
 	// message
 	// system
 	// message2
