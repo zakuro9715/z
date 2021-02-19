@@ -188,6 +188,24 @@ tasks:
 $z helloworld
 hello world
 ```
+
+### Variable
+
+```
+var:
+    seq: seq 3
+tasks:
+    count: {{seq}} | cat  # seq 10
+```
+
+```
+$ z count
+1
+2
+3
+```
+
+
 ### PATH
 
 You can specify additional PATH

@@ -188,6 +188,24 @@ tasks:
 $z helloworld
 hello world
 ```
+
+### Variable
+
+```
+var:
+    seq: seq 3
+tasks:
+    count: {{seq}} | cat  # seq 10
+```
+
+```
+$ z count
+1
+2
+3
+```
+
+
 ### PATH
 
 You can specify additional PATH
@@ -228,6 +246,8 @@ shell: bash                        # Shell to run commands
 default: hello.world               # Default task. hello.world -> z hello world
 env:
   MESSAGE: message                 # It used if environment variable does not exist.
+var:
+  value: value
 tasks:                             # Task list
   hello:                           # Task name
     desc: Say hello                # Task description
@@ -263,6 +283,7 @@ tasks:                             # Task list
   echo.env.message2:
     env: MESSAGE=message2          # task local default env
     run: echo $MESSAGE
+  echo.var.value: echo {{value}}   # use var
   alias.helloworld:
     z: hello.world                 # Alias to other task
 ```
