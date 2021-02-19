@@ -23,6 +23,10 @@ github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+
 github.com/stretchr/testify v1.4.0/go.mod h1:j7eGeouHqKxXV5pUuKE4zz7dFj8WfuZ+81PSLYec5m4=
 github.com/stretchr/testify v1.6.1 h1:hDPOHmpOpP40lSULcqw7IrRb/u7w6RpDC9399XyoNd0=
 github.com/stretchr/testify v1.6.1/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
+github.com/valyala/bytebufferpool v1.0.0 h1:GqA5TC/0021Y/b9FG4Oi9Mr3q7XYx6KllzawFIhcdPw=
+github.com/valyala/bytebufferpool v1.0.0/go.mod h1:6bBcMArwyJ5K/AmCkWv1jt77kVWyCJ6HpOuEn7z0Csc=
+github.com/valyala/fasttemplate v1.2.1 h1:TVEnxayobAdVkhQfrfes2IzOB6o+z4roRkPF52WA1u4=
+github.com/valyala/fasttemplate v1.2.1/go.mod h1:KHLXt3tVN2HBp8eijSv/kGJopbvo7S+qRAEEKiv+SiQ=
 github.com/zakuro9715/nzargv v0.0.0-20201112004419-3ac1cedb04af/go.mod h1:5pCX3FL0EqDSoUo0ayCjhI7vFcMjIQwHMtcoqQZGLlc=
 github.com/zakuro9715/nzflag v0.0.0-20201115191800-ad78cd17d5c6 h1:HuqATUhFY+4Djg54elSMYdvbj+ETFYZxqzlOKyU30hY=
 github.com/zakuro9715/nzflag v0.0.0-20201115191800-ad78cd17d5c6/go.mod h1:bWg8ccwVDzZ9EdsX+my+8wq7d8yObikBEooJ5AHvfFI=
