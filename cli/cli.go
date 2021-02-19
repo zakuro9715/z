@@ -96,7 +96,6 @@ func processFlags(nzargs []nzflag.Value) (i int, _ *config.Config, _ *runner.Con
 	}
 
 	helpFlag := false
-	unknownFlag := false
 	verboseFlag := isEnvValTrue(os.Getenv(ENV_KEY_ZVERBOSE))
 	rconfig := &runner.Config{Silent: isEnvValTrue(os.Getenv(ENV_KEY_ZSILENT))}
 	for ; i < len(nzargs); i++ {
@@ -118,9 +117,10 @@ func processFlags(nzargs []nzflag.Value) (i int, _ *config.Config, _ *runner.Con
 		case arg.Flag().Name == "silent":
 			rconfig.Silent = true
 		default: // unknow flag
-			unknownFlag = true
+			goto parse_end
 		}
 	}
+parse_end:
 
 	if verboseFlag {
 		log.Default.Level = log.INFO
@@ -134,11 +134,6 @@ func processFlags(nzargs []nzflag.Value) (i int, _ *config.Config, _ *runner.Con
 	config, err := config.LoadConfig(configPath)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, yaml.FormatError(err, true, true))
-		return i, config, rconfig, 1
-	}
-
-	if unknownFlag {
-		fprintHelp(os.Stderr, config)
 		return i, config, rconfig, 1
 	}
 
