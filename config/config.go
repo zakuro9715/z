@@ -18,11 +18,21 @@ func (e *Envs) UnmarshalYAML(data []byte) error {
 	return err
 }
 
+type Vars yaml.StringKeyValueList
+
+func (v *Vars) UnmarshalYAML(data []byte) error {
+	vv := yaml.StringKeyValueList{}
+	err := yaml.Unmarshal(data, &vv)
+	*v = Vars(vv)
+	return err
+}
+
 type config struct {
 	Shell   string          `yaml:"shell"`
 	Default string          `yaml:"default"`
 	Tasks   Tasks           `yaml:"tasks"`
 	Envs    Envs            `yaml:"env"`
+	Vars    Vars            `yaml:"var"`
 	Paths   yaml.StringList `yaml:"path"`
 }
 
@@ -52,6 +62,10 @@ func LoadConfig(filename string) (*Config, error) {
 		log.Info("    " + filename)
 		log.Info("  default:")
 		log.Info("    " + config.Default)
+		log.Info("  var:")
+		for k, v := range config.Vars {
+			log.Info("    " + k + " : " + v)
+		}
 		log.Info("  tasks:")
 		for _, task := range config.allTasks {
 			log.Info("    " + task.FullName)

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"strings"
 
+	"github.com/valyala/fasttemplate"
 	"github.com/zakuro9715/z/yaml"
 )
 
@@ -95,8 +96,25 @@ func (t *Task) setup(c *Config, parent *Task, name string) {
 	if t.FullName == c.Default {
 		t.IsDefault = true
 	}
+	t.expandVars()
+
 	for name, sub := range t.Tasks {
 		sub.setup(c, t, name)
+	}
+}
+
+func template(s string, m map[string]interface{}) string {
+	return fasttemplate.New(s, "{{", "}}").ExecuteString(m)
+}
+
+func (t *Task) expandVars() {
+	vars := map[string]interface{}{}
+	for k, v := range t.Config.Vars {
+		vars[k] = v
+	}
+	t.Description = template(t.Description, vars)
+	for i, cmd := range t.Cmds {
+		t.Cmds[i] = template(cmd, vars)
 	}
 }
 
