@@ -189,6 +189,20 @@ $z helloworld
 hello world
 ```
 
+### Env
+
+```
+env:
+    - KEY=VALUE
+tasks:
+    echo: echo $KEY
+```
+
+```
+$ z echo
+VALUE
+```
+
 ### Variable
 
 ```
