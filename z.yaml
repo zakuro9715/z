@@ -1,6 +1,6 @@
 default: readme
 tasks:
-  install: go install
+  symlink: go build && ln -sf $(pwd)/z $HOME/bin/
   release:
     desc: z release v1.0.0
     args:
@@ -18,13 +18,10 @@ tasks:
     run:
       - sh scripts/generate-readme.sh
   test:
-    - go install
     - go test ./...
   run:
-    - go install
     - go run .
   bench:
-    - go install
     - go test -bench . -benchmem
   bench.write: |
     txt=$(cat benchmark.txt)
