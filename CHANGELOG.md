@@ -4,6 +4,12 @@ Planed to implement
 * Variables
 * Shell Completion
 
+v0.X.X / 2021-XX-XX
+===================
+
+* Report error with invalid key
+* Bug fixes
+
 v0.7.0 / 2021-02-23
 ===================
 
