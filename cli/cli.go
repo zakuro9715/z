@@ -26,6 +26,7 @@ Usage:
 Options:
   -c config, --config=config Specify config file [default: z.yaml, env: ZCONFIG]
   -v, --verbose              Enbale verbose log [env: ZVERBOSE]
+  --silent                   Supress output [env: ZSILENT]
   -h, --help                 Print help
   -V, --verison              Print version
 `
