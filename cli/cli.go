@@ -22,6 +22,12 @@ z - Z Task runner
 
 Usage:
   z [OPTIONS] task... [ARGS]
+
+Options:
+  -c config, --config=config Specify config file [default: z.yaml]
+  -v, --verbose              Enbale verbose log
+  -h, --help                 Print help
+  -V, --verison              Print version
 `
 
 const (
