@@ -174,9 +174,6 @@ func findTask(i *int, nzargs []nzflag.Value, config *config.Config) (task *confi
 			if newTask, err := config.FindTask(fullName); err == nil {
 				*i = i2 + 1
 				task = newTask
-				if len(task.AliasTo) > 0 {
-					task, _ = config.FindTask(task.AliasTo)
-				}
 			}
 		}
 	}
