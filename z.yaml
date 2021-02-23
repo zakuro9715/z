@@ -1,5 +1,8 @@
-default: readme
+default: default
 tasks:
+  default:
+    - z readme
+    - z build
   symlink: go build && ln -sf $(pwd)/z $HOME/bin/
   release:
     desc: z release v1.0.0
@@ -19,6 +22,8 @@ tasks:
       - sh scripts/generate-readme.sh
   test:
     - go test ./...
+  build:
+    - go build .
   run:
     - go run .
   bench:
