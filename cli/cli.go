@@ -24,8 +24,8 @@ Usage:
   z [OPTIONS] task... [ARGS]
 
 Options:
-  -c config, --config=config Specify config file [default: z.yaml]
-  -v, --verbose              Enbale verbose log
+  -c config, --config=config Specify config file [default: z.yaml, env: ZCONFIG]
+  -v, --verbose              Enbale verbose log [env: ZVERBOSE]
   -h, --help                 Print help
   -V, --verison              Print version
 `
