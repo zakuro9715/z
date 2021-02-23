@@ -4,7 +4,7 @@ Planed to implement
 * Variables
 * Shell Completion
 
-v0.x.x / 2021-xx-xx
+v0.7.0 / 2021-02-23
 ===================
 
 * Can pass flag to default task now
