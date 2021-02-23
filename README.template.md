@@ -177,16 +177,28 @@ hello world
 
 ### Task Alias
 
+Just use z as command. Config will be inherited.
+
 ```yaml
+# myconfig.yaml
 tasks:
     hello.world: echo hello world
-    helloworld:
-        z: hello.world
+    helloworld: z hello world # same as `z --config=myconfig.yaml hello world`
 ```
 
 ```
-$z helloworld
+$z --config=myconfig.yaml helloworld
 hello world
+```
+
+Of course, you can use another config
+
+```yaml
+tasks:
+    hello:
+        tasks:
+            a: z --config=a.yaml hello
+            b: z --config=b.yaml hello
 ```
 
 ### Env
