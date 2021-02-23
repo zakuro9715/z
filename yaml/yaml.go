@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	decodeOptions = []goyaml.DecodeOption{yaml.DisallowDuplicateKey()}
+	decodeOptions = []goyaml.DecodeOption{yaml.DisallowDuplicateKey(), yaml.DisallowUnknownField()}
 )
 
 type StringList []string
