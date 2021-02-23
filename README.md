@@ -298,7 +298,7 @@ tasks:                             # Task list
     env: MESSAGE=message2          # task local default env
     run: echo $MESSAGE
   echo.var.value: echo {{value}}   # use var
-  helloworld: { z: hello.world }   # Alias to other task
+  helloworld: z hello.world        # Alias to other task
 ```
 
 ```examples/npm.yaml
