@@ -32,7 +32,7 @@ func BenchmarkHelloExapmle(b *testing.B) {
 		os.Setenv("MESSAGE", "system")
 		cli.Main([]string{"echo", "env", "message2"})
 
-		cli.Main([]string{"alias", "helloworld", "alias"})
+		cli.Main([]string{"helloworld", "alias"})
 	}
 }
 
@@ -89,7 +89,7 @@ func ExampleVarAndEnv() {
 }
 
 func ExampleAlias() {
-	cli.Main([]string{"alias", "helloworld", "alias"})
+	cli.Main([]string{"helloworld", "alias"})
 	// Output:
 	// hello world alias
 	// bye world alias
