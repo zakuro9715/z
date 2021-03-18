@@ -1,5 +1,6 @@
 default: default
 tasks:
+  hello: z -c examples/hello.yaml $@
   default:
     - z readme
     - z build
@@ -9,7 +10,7 @@ tasks:
     args:
       required: true
     run:
-      - git tag
+      - git tag $@
       - git push origin
     tasks:
       install:

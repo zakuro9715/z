@@ -47,15 +47,10 @@ func ExampleHello() {
 	cli.Main([]string{"hello", "python"})
 	// Output:
 	// hello world
-	// bye world
 	// hello world arg
-	// bye world arg
 	// hello you
-	// bye you
 	// hello world
-	// bye world
 	// hello world
-	// bye world
 	// hello script
 	// hello script
 	// hello python
@@ -92,5 +87,4 @@ func ExampleAlias() {
 	cli.Main([]string{"helloworld", "alias"})
 	// Output:
 	// hello world alias
-	// bye world alias
 }

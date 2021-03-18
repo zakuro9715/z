@@ -14,8 +14,9 @@ type Hooks struct {
 }
 
 type ArgsConfig struct {
-	Required bool   `yaml:"required"`
-	Default  string `yaml:"default"`
+	Required    bool   `yaml:"required"`
+	Default     string `yaml:"default"`
+	Passthrough bool   `yaml:"passthrough"`
 }
 
 func (v ArgsConfig) ProcessArgs(args []string) ([]string, error) {

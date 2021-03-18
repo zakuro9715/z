@@ -278,8 +278,7 @@ tasks:                             # Task list
   hello:                           # Task name
     desc: Say hello                # Task description
     run:                           # Commands to run
-      - echo hello                 # `bash -c "echo hello {args}`
-      - echo bye                   # `bash -c "echo bye {args}"`
+      - echo hello $@              #
     args:
       required: true               # Required one more arguments
       default: you                 # Default argument
@@ -298,9 +297,9 @@ tasks:                             # Task list
 
   hello.world:                     # Sub task shorthand (Task will be 'z hello world')
     run:
-      - z hello -- world           # Args are passed all commands
-                                   # so it runs 'bash -c "echo hello world"' and 'bash -c "echo bye world"
-                                   # after -- is args (not subtask name)
+      - z hello -- world           # after -- is args (not subtask name)
+    args:
+      passthrough: true            # passthrough arguments. So `z hello.world arg` will be `z hello -- world arg`
   echo: echo                       # Shorthand command ('run' can be omitted').
   echo.twice:                      # Multi commands can be used
     - echo

@@ -146,16 +146,27 @@ hello world
 ```
 
 
-### Args or flags
+### Args
 
-You can specify args and flags. They are passed to each commands
+Args will be passed. You can use it as `$@`. If args.passthrough == true, args will be embedded in each commands
 
 ```
+$ cat z.yaml
+tasks:
+    hello: echo hello $@
+    hiho:
+        run:
+            - echo hi
+            - echo ho
+        args:
+            passthrough: true
 $ z hello world
-
 # It runs
-sh -c "echo hello1 world"
-sh -c "echo hello2 world"
+sh -c "echo hello" "sh" "world"
+$ z hiho world
+# It runs
+sh -c "echo hi world"
+sh -c "echo ho world"
 ```
 
 ### Default task

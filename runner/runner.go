@@ -132,8 +132,15 @@ func (r Runner) Run(task *config.Task, args []string) error {
 			log.Info("  script: %v %v", command, argsStr)
 			return r.runCmd(exec.Command(shell, append([]string{command}, args...)...))
 		} else {
-			log.Info("  command: %v %v", command, argsStr)
-			cmd := exec.Command(shell, "-c", command+" "+strings.Join(args, " "))
+			log.Info("  command: %v -c '%v' %v %v", shell, command, shell, argsStr)
+			cmd := exec.Command(shell, "-c")
+			if task.ArgsConfig.Passthrough {
+				cmd.Args = append(cmd.Args, command+" "+argsStr)
+			} else {
+				cmd.Args = append(cmd.Args, command)
+				cmd.Args = append(cmd.Args, shell)
+				cmd.Args = append(cmd.Args, args...)
+			}
 			if err := r.runCmd(cmd); err != nil {
 				return err
 			}
