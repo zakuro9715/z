@@ -74,6 +74,9 @@ func (task *Task) UnmarshalYAML(data []byte) error {
 }
 
 func (t *Task) setup(c *Config, parent *Task, name string) {
+	if t == nil {
+		return
+	}
 	names := strings.SplitN(name, ".", 2)
 	if len(names) > 1 {
 		sub := *t // copy

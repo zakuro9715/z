@@ -75,6 +75,9 @@ func LoadConfig(filename string) (*Config, error) {
 }
 
 func (c *Config) collectTasksRecursive(task *Task) {
+	if task == nil {
+		return
+	}
 	if !task.dummy {
 		c.allTasks[task.FullName] = task
 	}
