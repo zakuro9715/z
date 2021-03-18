@@ -4,6 +4,11 @@ Planed to implement
 * Variables
 * Shell Completion
 
+v0.X.X / 2021-XX-XX
+===================
+
+* New argument handling
+
 v0.8.0 / 2021-03-19
 ===================
 
