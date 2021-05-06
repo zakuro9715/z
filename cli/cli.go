@@ -96,7 +96,7 @@ func fprintVersion(w io.Writer) {
 }
 
 // exit_code == -1 means don't exit
-func processFlags(nzargs []nzflag.Value) (i int, _ *config.Config, _ *runner.Config, code int) {
+func processFlags(nzargs []nzflag.Value) (i int, cfg *config.Config, rconfig *runner.Config, code int) {
 	configPath := "z.yaml"
 	if p, ok := os.LookupEnv("ZCONFIG"); ok {
 		configPath = p
@@ -104,7 +104,7 @@ func processFlags(nzargs []nzflag.Value) (i int, _ *config.Config, _ *runner.Con
 
 	helpFlag := false
 	verboseFlag := isEnvValTrue(os.Getenv(ENV_KEY_ZVERBOSE))
-	rconfig := &runner.Config{Silent: isEnvValTrue(os.Getenv(ENV_KEY_ZSILENT))}
+	rconfig = &runner.Config{Silent: isEnvValTrue(os.Getenv(ENV_KEY_ZSILENT))}
 	for ; i < len(nzargs); i++ {
 		arg := nzargs[i]
 		if arg.Type() != nzflag.TypeFlag {
@@ -138,18 +138,21 @@ parse_end:
 	log.Info("flags:")
 	log.Info("  %v", nzargs[0:i])
 
-	config, err := config.LoadConfig(configPath)
+	cfg, err := config.LoadConfig(configPath)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, yaml.FormatError(err, true, true))
-		return i, config, rconfig, 1
+		code = 1
+		return
 	}
 
 	if helpFlag {
-		fprintHelp(os.Stdout, config)
-		return i, config, rconfig, 0
+		fprintHelp(os.Stdout, cfg)
+		code = 0
+		return
 	}
 
-	return i, config, rconfig, -1
+	code = -1
+	return
 }
 
 func findTask(i *int, nzargs []nzflag.Value, config *config.Config) (task *config.Task, code int) {
