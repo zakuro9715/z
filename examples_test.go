@@ -88,3 +88,8 @@ func ExampleAlias() {
 	// Output:
 	// hello world alias
 }
+
+func ExampleVerifyConfig() {
+	cli.Main([]string{"--verify-config"})
+	// Output:
+}

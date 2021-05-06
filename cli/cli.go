@@ -26,6 +26,7 @@ Usage:
 Options:
   -c config, --config=config Specify config file [default: z.yaml, env: ZCONFIG]
   -v, --verbose              Enbale verbose log [env: ZVERBOSE]
+  --verify-config            Only verify config. no task will run
   --silent                   Supress output [env: ZSILENT]
   -h, --help                 Print help
   -V, --verison              Print version
@@ -104,6 +105,7 @@ func processFlags(nzargs []nzflag.Value) (i int, cfg *config.Config, rconfig *ru
 
 	helpFlag := false
 	verboseFlag := isEnvValTrue(os.Getenv(ENV_KEY_ZVERBOSE))
+	verifyConfigFlag := false
 	rconfig = &runner.Config{Silent: isEnvValTrue(os.Getenv(ENV_KEY_ZSILENT))}
 	for ; i < len(nzargs); i++ {
 		arg := nzargs[i]
@@ -123,6 +125,8 @@ func processFlags(nzargs []nzflag.Value) (i int, cfg *config.Config, rconfig *ru
 			configPath = arg.Flag().Values[0]
 		case arg.Flag().Name == "silent":
 			rconfig.Silent = true
+		case arg.Flag().Name == "verify-config":
+			verifyConfigFlag = true
 		default: // unknow flag
 			goto parse_end
 		}
@@ -147,6 +151,12 @@ parse_end:
 
 	if helpFlag {
 		fprintHelp(os.Stdout, cfg)
+		code = 0
+		return
+	}
+
+	if verifyConfigFlag {
+		// Config is loaded above. So config is valid at here.
 		code = 0
 		return
 	}
