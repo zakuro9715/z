@@ -6,7 +6,7 @@ import (
 	"github.com/zakuro9715/z/cli"
 )
 
-var version = "v0.6.0 or later" // Set via ldflags
+var version = "v0.8.0 or later" // Set via ldflags
 
 func init() {
 	cli.Version = version
