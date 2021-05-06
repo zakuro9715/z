@@ -8,6 +8,7 @@ v0.X.X / 2021-XX-XX
 ===================
 
 * New argument handling
+* `--verify-config` flag
 
 v0.8.0 / 2021-03-19
 ===================
