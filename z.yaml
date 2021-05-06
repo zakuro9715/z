@@ -29,6 +29,10 @@ tasks:
     - go run .
   bench:
     - go test -bench . -benchmem
+  bench.commit: |
+    z bench.write
+    git add benchmark.txt
+    git commit -m "update benchmark"
   bench.write: |
     txt=$(cat benchmark.txt)
 
