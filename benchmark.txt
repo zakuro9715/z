@@ -1,3 +1,12 @@
+========================== 2021-05-06: 27a48d83a0725e18dc8e1f3aec4891b102b94c27 ==========================
+goos: linux
+goarch: amd64
+pkg: github.com/zakuro9715/z
+cpu: AMD Ryzen 7 3800X 8-Core Processor             
+BenchmarkHelloExapmle-16    	      15	  74078593 ns/op	 5283888 B/op	  100007 allocs/op
+PASS
+ok  	github.com/zakuro9715/z	1.273s
+==========================================================================================================
 ========================== 2021-02-13: 2e65b1f4b51923620baabaebeefa728dcfed7c34 ==========================
 goos: linux
 goarch: amd64
