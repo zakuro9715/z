@@ -172,7 +172,7 @@ func findTask(i *int, nzargs []nzflag.Value, config *config.Config) (task *confi
 		i2 := *i
 		for ; i2 < len(nzargs); i2++ {
 			arg := nzargs[i2]
-			if isHelpFlag(nzargs[i2].String()) {
+			if isHelpFlag(arg.String()) {
 				fprintTaskHelp(os.Stdout, task)
 				return nil, 0
 			}
