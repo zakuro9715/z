@@ -4,6 +4,11 @@ Planed to implement
 * Variables
 * Shell Completion
 
+v0.X.X / 2021-XX-XX
+===================
+
+* Minor improvements
+
 v0.9.0 / 2021-05-06
 ===================
 
