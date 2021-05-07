@@ -3,6 +3,7 @@ Planed to implement
 
 * Variables
 * Shell Completion
+* Overhaul codebase
 
 v0.X.X / 2021-XX-XX
 ===================
