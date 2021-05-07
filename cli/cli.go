@@ -86,6 +86,9 @@ func fprintHelp(w io.Writer, config *config.Config) {
 func fprintTaskHelp(w io.Writer, task *config.Task) {
 	var sb strings.Builder
 	sb.WriteString(task.Description)
+	if len(task.Description) > 0 && task.Description[len(task.Description)-1] != '\n' {
+		sb.WriteRune('\n')
+	}
 	if len(task.Tasks) > 0 {
 		fprintTasks(&sb, task.Tasks)
 	}
