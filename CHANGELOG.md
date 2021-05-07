@@ -9,6 +9,7 @@ v0.X.X / 2021-XX-XX
 ===================
 
 * Minor improvements
+* `disable_help`
 
 v0.9.0 / 2021-05-06
 ===================
