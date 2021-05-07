@@ -28,12 +28,13 @@ func (v *Vars) UnmarshalYAML(data []byte) error {
 }
 
 type config struct {
-	Shell   string          `yaml:"shell"`
-	Default string          `yaml:"default"`
-	Tasks   Tasks           `yaml:"tasks"`
-	Envs    Envs            `yaml:"env"`
-	Vars    Vars            `yaml:"var"`
-	Paths   yaml.StringList `yaml:"path"`
+	Shell       string          `yaml:"shell"`
+	Default     string          `yaml:"default"`
+	Tasks       Tasks           `yaml:"tasks"`
+	Envs        Envs            `yaml:"env"`
+	Vars        Vars            `yaml:"var"`
+	Paths       yaml.StringList `yaml:"path"`
+	DisableHelp bool            `yaml:"disable_help"`
 }
 
 type Config struct {

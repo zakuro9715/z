@@ -152,7 +152,7 @@ parse_end:
 		return
 	}
 
-	if helpFlag {
+	if helpFlag && !cfg.DisableHelp {
 		fprintHelp(os.Stdout, cfg)
 		code = 0
 		return
@@ -175,7 +175,7 @@ func findTask(i *int, nzargs []nzflag.Value, config *config.Config) (task *confi
 		i2 := *i
 		for ; i2 < len(nzargs); i2++ {
 			arg := nzargs[i2]
-			if isHelpFlag(arg.String()) {
+			if isHelpFlag(arg.String()) && !config.DisableHelp {
 				fprintTaskHelp(os.Stdout, task)
 				return nil, 0
 			}
