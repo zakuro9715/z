@@ -281,6 +281,7 @@ tasks:
 ```examples/hello.yaml
 shell: bash                        # Shell to run commands
 default: hello.world               # Default task. hello.world -> z hello world
+disable_help: false                # If true, don't show z's help and --help flag is handled same as other flags
 env:
   MESSAGE: message                 # It used if environment variable does not exist.
 var:
