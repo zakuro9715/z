@@ -5,8 +5,8 @@ Planed to implement
 * Shell Completion
 * Overhaul codebase
 
-v0.X.X / 2021-XX-XX
-===================
+v0.10.0 / 2021-07-12
+====================
 
 * Minor improvements
 * `disable_help`
