@@ -304,7 +304,7 @@ tasks:                             # Task list
         path: examples             # Add path
         run: hello.sh
       python:
-        shell: python
+        shell: python3
         run: print('hello python')
 
   hello.world:                     # Sub task shorthand (Task will be 'z hello world')
