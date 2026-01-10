@@ -1,0 +1,9 @@
+default: run
+tasks:
+  run: |
+    if [ "$#" -eq 0 ]
+    then
+      pnpm dev
+    else
+      pnpm "$@"
+    fi
