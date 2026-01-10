@@ -99,8 +99,31 @@ func fprintVersion(w io.Writer) {
 	fmt.Fprintf(w, "z %v\n", Version)
 }
 
+type mode int
+
+const (
+	modeRun mode = iota
+	modePrintHelp
+	modePrintVersion
+	modeExit
+)
+
+type processFlagsResult struct {
+	i         int
+	config    *config.Config
+	runConfig *runner.Config
+	exitCode  int
+	mode      mode
+}
+
+func (r *processFlagsResult) markAsExit(code int) {
+	r.exitCode = code
+	r.mode = modeExit
+}
+
 // exit_code == -1 means don't exit
-func processFlags(nzargs []nzflag.Value) (i int, cfg *config.Config, rconfig *runner.Config, code int) {
+func processFlags(nzargs []nzflag.Value) *processFlagsResult {
+	r := &processFlagsResult{}
 	configPath := "z.yaml"
 	if p, ok := os.LookupEnv("ZCONFIG"); ok {
 		configPath = p
@@ -109,9 +132,9 @@ func processFlags(nzargs []nzflag.Value) (i int, cfg *config.Config, rconfig *ru
 	helpFlag := false
 	verboseFlag := isEnvValTrue(os.Getenv(ENV_KEY_ZVERBOSE))
 	verifyConfigFlag := false
-	rconfig = &runner.Config{Silent: isEnvValTrue(os.Getenv(ENV_KEY_ZSILENT))}
-	for ; i < len(nzargs); i++ {
-		arg := nzargs[i]
+	r.runConfig = &runner.Config{Silent: isEnvValTrue(os.Getenv(ENV_KEY_ZSILENT))}
+	for r.i = 0; r.i < len(nzargs); r.i++ {
+		arg := nzargs[r.i]
 		if arg.Type() != nzflag.TypeFlag {
 			break
 		}
@@ -119,15 +142,14 @@ func processFlags(nzargs []nzflag.Value) (i int, cfg *config.Config, rconfig *ru
 		case isHelpFlag(arg.String()):
 			helpFlag = true
 		case arg.Flag().Name == "V" || arg.Flag().Name == "version":
-			fprintVersion(os.Stdout)
-			code = 0
-			return
+			r.mode = modePrintVersion
+			return r
 		case arg.Flag().Name == "v" || arg.Flag().Name == "verbose":
 			verboseFlag = true
 		case arg.Flag().Name == "c" || arg.Flag().Name == "config":
 			configPath = arg.Flag().Values[0]
 		case arg.Flag().Name == "silent":
-			rconfig.Silent = true
+			r.runConfig.Silent = true
 		case arg.Flag().Name == "verify-config":
 			verifyConfigFlag = true
 		default: // unknow flag
@@ -143,29 +165,29 @@ parse_end:
 	os.Setenv(ENV_KEY_ZCONNFIG, configPath)
 
 	log.Info("flags:")
-	log.Info("  %v", nzargs[0:i])
+	log.Info("  %v", nzargs[0:r.i])
 
 	cfg, err := config.LoadConfig(configPath)
+	r.config = cfg
 	if err != nil {
 		fmt.Fprintln(os.Stderr, yaml.FormatError(err, true, true))
-		code = 1
-		return
+		r.markAsExit(1)
+		return r
 	}
 
 	if helpFlag && !cfg.DisableHelp {
-		fprintHelp(os.Stdout, cfg)
-		code = 0
-		return
+		r.mode = modePrintHelp
+		return r
 	}
 
 	if verifyConfigFlag {
 		// Config is loaded above. So config is valid at here.
-		code = 0
-		return
+		r.markAsExit(0)
+		return r
 	}
 
-	code = -1
-	return
+	r.mode = modeRun
+	return r
 }
 
 func findTask(i *int, nzargs []nzflag.Value, config *config.Config) (task *config.Task, code int) {
@@ -211,13 +233,26 @@ func Main(args []string) (code int) {
 		},
 	}).Normalize(args)
 
-	var i int
-	var task *config.Task
-	var config *config.Config
-	var rconfig *runner.Config
-	if i, config, rconfig, code = processFlags(nzargs); code >= 0 {
+	var processFlagsResult *processFlagsResult
+	if processFlagsResult = processFlags(nzargs); processFlagsResult.mode == modeExit {
+		code = processFlagsResult.exitCode
 		return
 	}
+	switch processFlagsResult.mode {
+	case modePrintVersion:
+		fprintVersion(os.Stdout)
+		return 0
+	case modePrintHelp:
+		fprintHelp(os.Stdout, processFlagsResult.config)
+		return 0
+	case modeExit:
+		return processFlagsResult.exitCode
+	}
+
+	var task *config.Task
+	i := processFlagsResult.i
+	config := processFlagsResult.config
+	runConfig := processFlagsResult.runConfig
 
 	if task, code = findTask(&i, nzargs, config); code >= 0 {
 		return
@@ -227,7 +262,7 @@ func Main(args []string) (code int) {
 	for i, arg := range nzargs[i:] {
 		taskArgs[i] = arg.String()
 	}
-	if err := runner.Run(rconfig, task, taskArgs); err != nil {
+	if err := runner.Run(runConfig, task, taskArgs); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		return 1
 	}
