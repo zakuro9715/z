@@ -36,7 +36,7 @@ func BenchmarkHelloExapmle(b *testing.B) {
 	}
 }
 
-func ExampleHello() {
+func Example_hello() {
 	cli.Main([]string{})
 	cli.Main([]string{"arg"})
 	cli.Main([]string{"hello"})
@@ -56,7 +56,7 @@ func ExampleHello() {
 	// hello python
 }
 
-func ExampleEcho() {
+func Example_echo() {
 	cli.Main([]string{"echo", "hello"})
 	cli.Main([]string{"echo", "twice", "hi"})
 	// Output:
@@ -65,7 +65,7 @@ func ExampleEcho() {
 	// hi
 }
 
-func ExampleVarAndEnv() {
+func Example_varAndEnv() {
 	cli.Main([]string{"echo.var.value"})
 	os.Unsetenv("MESSAGE")
 	cli.Main([]string{"echo.env.message"})
@@ -83,13 +83,13 @@ func ExampleVarAndEnv() {
 	// system
 }
 
-func ExampleAlias() {
+func Example_alias() {
 	cli.Main([]string{"helloworld", "alias"})
 	// Output:
 	// hello world alias
 }
 
-func ExampleVerifyConfig() {
+func Example_verifyConfig() {
 	cli.Main([]string{"--verify-config"})
 	// Output:
 }
